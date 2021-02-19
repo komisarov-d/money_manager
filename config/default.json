@@ -1,0 +1,5 @@
+{
+   "port": "5000",
+   "mongo": "mongodb+srv://dmitriy:dmitriy123qwe@cluster0.uiljg.mongodb.net/money_manager",
+   "jwtSecret": "sseeccrreettwwoorrdd"
+}
