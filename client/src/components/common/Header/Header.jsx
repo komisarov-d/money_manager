@@ -1,38 +1,54 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 
 
-export const Header = () => {
+export const Header = (props) => {
+
+   const asideToggle = (e) => {
+      e.preventDefault()
+      props.sidebarToggle()
+   }
+
+   useEffect(() => {
+      const dropDown = document.querySelector('.dropdown-trigger')
+      window.M.Dropdown.init(dropDown, { alignment: 'right' })
+   }, [])
+
 
    return (
       <header >
-         <nav class="navbar orange lighten-1">
-            <div class="nav-wrapper">
-               <div class="navbar-left">
-                  <a href="#">
-                     <i class="material-icons black-text">dehaze</i>
-                  </a>
-                  <span class="black-text">12.12.12</span>
+         <nav className="navbar orange lighten-1">
+            <div className="nav-wrapper">
+               <div className="navbar-left">
+                  <span onClick={asideToggle} >
+                     <i className="material-icons black-text">dehaze</i>
+                  </span>
+                  <span className="black-text">{Date.now().toLocaleString()}</span>
                </div>
 
-               <ul class="right hide-on-small-and-down">
+               <ul className="right hide-on-small-and-down">
                   <li>
+                     {/* eslint-disable-next-line */}
                      <a
-                        class="dropdown-trigger black-text"
-                        href="#"
+                        className="dropdown-trigger black-text"
+
+                        href='#'
                         data-target="dropdown"
-                     >USER NAME <i class="material-icons right">arrow_drop_down</i>
+
+
+                     >USER NAME <i className="material-icons right">arrow_drop_down</i>
                      </a>
 
-                     <ul id='dropdown' class='dropdown-content'>
+                     <ul id='dropdown' className='dropdown-content'>
                         <li>
-                           <a href="#" class="black-text">
-                              <i class="material-icons">account_circle</i>Профиль</a>
+                           <NavLink to='/profile' className="black-text">
+                              <i className="material-icons">account_circle</i>Профиль</NavLink>
                         </li>
-                        <li class="divider" tabindex="-1"></li>
+                        <li className="divider" tabindex="-1"></li>
                         <li>
-                           <a href="#" class="black-text">
-                              <i class="material-icons">assignment_return</i>Выйти
-                </a>
+                           <NavLink to='/login' className="black-text">
+                              <i className="material-icons">assignment_return</i>
+                              Выйти</NavLink>
                         </li>
                      </ul>
                   </li>

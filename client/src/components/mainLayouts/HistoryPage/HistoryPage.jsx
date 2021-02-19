@@ -1,10 +1,10 @@
 import React from 'react'
 
-import style from './History.module.scss'
+
 import { Pie } from 'react-chartjs-2';
-export const History = () => {
+export const HistoryPage = () => {
    document.title = 'History'
-   const records = [{ id: 1 }]
+
 
    const state = {
       labels: ['January', 'February', 'March',
@@ -57,9 +57,9 @@ export const History = () => {
             <h3>История записей</h3>
          </div>
 
-         <div className={style.pie}>
+         <div className='pie'>
 
-            <Pie className={style.pie}
+            <Pie className={'pie'}
                data={state}
                width={150}
                height={50}
@@ -93,11 +93,11 @@ export const History = () => {
                      <td>12.12.32</td>
                      <td>name</td>
                      <td>
-                        <span class="white-text badge red">Расход</span>
+                        <span className="white-text badge red">Расход</span>
                      </td>
                      <td>
-                        <button class="btn-small btn">
-                           <i class="material-icons">open_in_new</i>
+                        <button className="btn-small btn">
+                           <i className="material-icons">open_in_new</i>
                         </button>
                      </td>
                   </tr>

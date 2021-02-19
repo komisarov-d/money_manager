@@ -1,78 +1,78 @@
 import React from 'react'
 
-export const Categories = () => {
+export const CategoriesPage = () => {
    document.title = 'Categories'
 
    return (
 
       <div>
-         <div class="page-title">
+         <div className="page-title">
             <h3>Категории</h3>
          </div>
          <section>
-            <div class="row">
-               <div class="col s12 m6">
+            <div className="row">
+               <div className="col s12 m6">
                   <div>
-                     <div class="page-subtitle">
+                     <div className="page-subtitle">
                         <h4>Создать</h4>
                      </div>
 
                      <form>
-                        <div class="input-field">
+                        <div className="input-field">
                            <input
                               id="name"
                               type="text"
                            />
                            <label for="name">Название</label>
-                           <span class="helper-text invalid">Введите название</span>
+                           <span className="helper-text invalid">Введите название</span>
                         </div>
 
-                        <div class="input-field">
+                        <div className="input-field">
                            <input
                               id="limit"
                               type="number"
                            />
                            <label for="limit">Лимит</label>
-                           <span class="helper-text invalid">Минимальная величина</span>
+                           <span className="helper-text invalid">Минимальная величина</span>
                         </div>
 
-                        <button class="btn waves-effect waves-light" type="submit">
-                           Создать<i class="material-icons right">send</i>
+                        <button className="btn waves-effect waves-light" type="submit">
+                           Создать<i className="material-icons right">send</i>
                         </button>
                      </form>
                   </div>
                </div>
-               <div class="col s12 m6">
+               <div className="col s12 m6">
                   <div>
-                     <div class="page-subtitle">
+                     <div className="page-subtitle">
                         <h4>Редактировать</h4>
                      </div>
 
                      <form>
-                        <div class="input-field" >
+                        <div className="input-field" >
                            <select>
                               <option>Category</option>
                            </select>
                            <label>Выберите категорию</label>
                         </div>
 
-                        <div class="input-field">
+                        <div className="input-field">
                            <input type="text" id="name" />
                            <label for="name">Название</label>
-                           <span class="helper-text invalid">TITLE</span>
+                           <span className="helper-text invalid">TITLE</span>
                         </div>
 
-                        <div class="input-field">
+                        <div className="input-field">
                            <input
                               id="limit"
                               type="number"
                            />
                            <label for="limit">Лимит</label>
-                           <span class="helper-text invalid">LIMIT</span>
+                           <span className="helper-text invalid">LIMIT</span>
                         </div>
 
-                        <button class="btn waves-effect waves-light" type="submit">
-                           Обновить <i class="material-icons right">send</i>
+                        <button className="btn waves-effect waves-light" type="submit">
+                           Обновить <i className="material-icons right">send</i>
                         </button>
                      </form>
                   </div>

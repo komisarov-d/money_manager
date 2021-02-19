@@ -1,17 +1,16 @@
 import React from 'react'
 
-import style from './Record.module.scss'
 export const RecordPage = () => {
    document.title = 'Records'
 
    return (
       <div>
-         <div class="page-title">
+         <div className="page-title">
             <h3>Новая запись</h3>
          </div>
 
-         <form class="form">
-            <div class="input-field" >
+         <form className="form">
+            <div className="input-field" >
                <select>
                   <option
                   >name cat</option>
@@ -22,7 +21,7 @@ export const RecordPage = () => {
             <p>
                <label>
                   <input
-                     class="with-gap"
+                     className="with-gap"
                      name="type"
                      type="radio"
                      value="income"
@@ -34,7 +33,7 @@ export const RecordPage = () => {
             <p>
                <label>
                   <input
-                     class="with-gap"
+                     className="with-gap"
                      name="type"
                      type="radio"
                      value="outcome"
@@ -43,28 +42,28 @@ export const RecordPage = () => {
                </label>
             </p>
 
-            <div class="input-field">
+            <div className="input-field">
                <input
                   id="amount"
                   type="number"
                />
                <label for="amount">Сумма</label>
-               <span class="helper-text invalid">amount пароль</span>
+               <span className="helper-text invalid">amount пароль</span>
             </div>
 
-            <div class="input-field">
+            <div className="input-field">
                <input
                   id="description"
                   type="text"
                />
                <label for="description">Описание</label>
                <span
-                  class="helper-text invalid">description пароль</span>
+                  className="helper-text invalid">description пароль</span>
             </div>
 
-            <button class="btn waves-effect waves-light" type="submit">
+            <button className="btn waves-effect waves-light" type="submit">
                Создать
-      <i class="material-icons right">send</i>
+      <i className="material-icons right">send</i>
             </button>
          </form>
       </div>

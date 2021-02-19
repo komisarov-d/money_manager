@@ -1,11 +1,14 @@
-import style from './App.module.scss';
+import { BrowserRouter } from 'react-router-dom';
 import { useRouter } from './router';
-
+import 'materialize-css'
 
 export const App = () => {
-   const router = useRouter(false)
+   const router = useRouter(true)
 
    return (
-      { router }
+      <BrowserRouter>
+         { router}
+      </BrowserRouter>
+
    )
 }

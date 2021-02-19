@@ -1,20 +1,20 @@
 import React from 'react'
 
-export const DetailRecord = () => {
+export const DetailPage = () => {
 
    requestAnimationFrame(
       <div>
          <div>
-            <div class="breadcrumb-wrap">
-               <a href="/history" class="breadcrumb">История</a>
-               <a class="breadcrumb">
+            <div className="breadcrumb-wrap">
+               <a href="/history" className="breadcrumb">История</a>
+               <a href='/history' className="breadcrumb">
                   Расход
       </a>
             </div>
-            <div class="row">
-               <div class="col s12 m6">
-                  <div class="card red">
-                     <div class="card-content white-text">
+            <div className="row">
+               <div className="col s12 m6">
+                  <div className="card red">
+                     <div className="card-content white-text">
                         <p>Описание:</p>
                         <p>Сумма:</p>
                         <p>Категория:</p>
