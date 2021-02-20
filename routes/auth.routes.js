@@ -58,7 +58,7 @@ router.post('/login',
             config.get('jwtSecret'),
             { expiresIn: '10h' }
          )
-         res.status(200).json({ token, userId: user.id })
+         res.json({ token, userId: user.id })
       } catch (e) {
          return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
       }

@@ -11,6 +11,8 @@ const PORT = config.get('port') ?? 5000
 app.use(express.json({ extended: true }))
 
 app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/category', require('./routes/categories.routes'))
+app.use('/api/record', require('./routes/records.routes'))
 
 const initialize = async () => {
    try {
