@@ -23,8 +23,6 @@ export const useRouter = (isAuth) => {
             <div className="app-main-layout">
                <Header sidebarToggle={sidebarToggle} />
                <Sidebar open={open} />
-
-
                <main className={["app-content", open ? '' : 'full'].join(' ')}>
                   <div className="app-page">
                      <Switch>
@@ -50,8 +48,9 @@ export const useRouter = (isAuth) => {
                            <Route exact path={'/planning'} >
                               <PlanningPage />
                            </Route>
-                           <Redirect to={'/home'} />
+
                         </Suspense>
+                        <Redirect to={'/home'} />
                      </Switch>
                   </div>
                </main>
@@ -64,21 +63,25 @@ export const useRouter = (isAuth) => {
          </div>
       )
    }
-   return (
-      <div>
-         <div className="grey darken-1 empty-layout">
-            <Switch>
-               <Suspense fallback={<div><Loader /></div>}>
-                  <Route exact path={'/login'}>
-                     <LoginPage />
-                  </Route>
-                  <Route exact path={'/singin'}>
-                     <SingUpPage />
-                  </Route>
+   if (!isAuth) {
+      return (
+         <div>
+            <div className="grey darken-1 empty-layout">
+               <Switch>
+                  <Suspense fallback={<div><Loader /></div>}>
+                     <Route exact path={'/login'}>
+                        <LoginPage />
+                     </Route>
+                     <Route exact path={'/singin'}>
+                        <SingUpPage />
+                     </Route>
+                     <Redirect to={'/login'} />
+                  </Suspense>
                   <Redirect to={'/login'} />
-               </Suspense>
-            </Switch>
-         </div></div>
-   )
+               </Switch>
+            </div></div>
+      )
+   }
+
 
 }

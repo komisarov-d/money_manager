@@ -13,7 +13,7 @@
   "author": "Komisarov Dmitriy komisarov.dev@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.0.0",
     "config": "^3.3.3",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
