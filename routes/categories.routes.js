@@ -16,7 +16,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/create', auth, async (req, res) => {
    try {
       const { title, limit } = req.body
-      const existCategory = await Category.findOne({ owner: req.user.userId && title })
+      const existCategory = await Category.findOne({ owner: req.user.userId, title })
       if (existCategory) {
          return res.status(400).json({ message: 'Категория с таким названием уже существует.' })
       }
@@ -30,7 +30,7 @@ router.post('/create', auth, async (req, res) => {
    }
 })
 
-router.update('/update/:id', auth, async (req, res) => {
+router.post('/update/:id', auth, async (req, res) => {
    try {
       const category = await Category.findById(req.params.id)
       if (!category) {

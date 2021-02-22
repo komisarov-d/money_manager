@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 const User = require('../models/User')
 const config = require('config')
+const auth = require('../middleware/auth.middleware')
 const router = Router()
 
-router.post('/register',
+router.post('/singup',
    [
       check('email', 'Введите корректный имейл').isEmail(),
       check('password', 'Минимальная длинна пароля 8 символов.').isLength({ min: 8 }),
@@ -58,10 +59,11 @@ router.post('/login',
             config.get('jwtSecret'),
             { expiresIn: '10h' }
          )
-         res.json({ token, userId: user.id })
+         res.json({ token, userId: user.id, name: user.name })
       } catch (e) {
          return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
       }
    })
+
 
 module.exports = router

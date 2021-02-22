@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', auth, async (req, res) => {
    try {
-      const records = Record.find({ owner: req.user.userId })
+      const records = await Record.find({ owner: req.user.userId })
       res.status(200).json({ records })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
@@ -14,15 +14,23 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
    try {
-      const record = Record.findById(req.params.id)
+      const record = await Record.findById(req.params.id)
       res.status(200).json({ record })
+   } catch (e) {
+      return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
+   }
+})
+router.delete('/:id', auth, async (req, res) => {
+   try {
+      await Record.deleteOne(req.params.id)
+      res.status(200).json({ message: 'Запись успешно удалена.' })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
    }
 })
 router.post('/record', auth, async (req, res) => {
    try {
-      const { description, amount, date, type, categoryId } = req.body
+      const { description, amount, type, categoryId } = req.body
       const record = new Record({
          description, amount, type, owner: req.user.userId, category: categoryId
       })

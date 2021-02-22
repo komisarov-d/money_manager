@@ -1,27 +1,21 @@
 
-
 const initialAuthState = {
    isAuth: true,
-   info: {
-      login: 'Dima',
-      bill: 12500
-   },
-   uid: null
-
+   login: 'Dima',
+   bill: 12500,
+   userId: null,
+   token: null
 }
 
 
 export const authReducer = (state = initialAuthState, action = authActions) => {
    switch (action.type) {
-      case 'LOGIN':
+      case 'AUTH/LOGIN':
          return { ...state, info: { ...action.payload } }
-      case 'LOGOUT':
-         return { ...state, info: { login: null, bill: null }, uid: null }
-      case 'SING_UP':
+      case 'AUTH/LOGOUT':
+         return { ...state, info: { login: null, bill: null, uid: null, token: null } }
+      case 'AUTH/SING_UP':
          return { ...state, info: { ...action.payload } }
-      case 'SET_INFO':
-         return { ...state, info: { ...action.payload } }
-
       default:
          return state;
    }
@@ -34,13 +28,25 @@ export const authActions = {
 }
 
 export const loginThunk = (email, password) => async (dispatch) => {
+   try {
 
+   } catch (e) {
+
+   }
 }
 export const singUpThunk = (email, password, login) => async (dispatch) => {
+   try {
 
+   } catch (e) {
+
+   }
 }
 export const logoutThunk = async (dispatch) => {
+   try {
 
+   } catch (e) {
+
+   }
 }
 
 
