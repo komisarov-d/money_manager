@@ -8,7 +8,7 @@ export const Sidebar = (props) => {
 
       <ul className={['sidenav', 'app-sidenav', props.open].join(' ')}>
          <li>
-            <NavLink to="/home" className="waves-effect waves-orange pointer">Счет</NavLink>
+            <NavLink to="/" className="waves-effect waves-orange pointer">Счет</NavLink>
          </li>
          <li>
             <NavLink to="/history" className="waves-effect waves-orange pointer">История</NavLink>

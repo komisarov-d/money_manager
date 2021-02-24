@@ -1,6 +1,6 @@
-import axios from axios
+import axios from 'axios'
 
-export const authApi = {
+export const categoriesApi = {
    async fetchCategories(token) {
       try {
          const response = await axios.get('/api/categories', {}, {
@@ -8,8 +8,9 @@ export const authApi = {
                Authorization: `Bearer ${token}`
             }
          })
-         const data = response.json()
-         return data
+         console.log(response)
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e
@@ -19,11 +20,13 @@ export const authApi = {
       try {
          const response = await axios.post('/api/categories/create', { category }, {
             headers: {
-               Authorization: `Bearer ${token}`
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json'
             }
          })
-         const data = response.json()
-         return data
+         console.log(response)
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e
@@ -33,11 +36,13 @@ export const authApi = {
       try {
          const response = await axios.post(`/api/categories/update/${categoryId}`, { updatedCategory }, {
             headers: {
-               Authorization: `Bearer ${token}`
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json'
             }
          })
-         const data = response.json()
-         return data
+         console.log(response)
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e

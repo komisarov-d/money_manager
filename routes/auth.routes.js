@@ -19,6 +19,8 @@ router.post('/singup',
          if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при регистрации' })
          }
+         console.log(req.body);
+
          const { email, password, name } = req.body
          const alreadyExists = await User.findOne({ email })
          if (alreadyExists) {
@@ -65,5 +67,17 @@ router.post('/login',
       }
    })
 
+router.post('/info', auth, async (req, res) => {
+   try {
+
+      const user = await User.findOne(req.user.userId)
+      if (!user) {
+         return res.status(400).json({ message: 'Пользователь с таким имейлом не найден.' })
+      }
+      res.json({ user })
+   } catch (e) {
+      return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
+   }
+})
 
 module.exports = router

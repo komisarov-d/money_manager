@@ -1,3 +1,4 @@
+import { recordsApi } from "../API/records.api"
 
 
 const initialAuthState = {
@@ -7,14 +8,12 @@ const initialAuthState = {
 
 export const recordsReducer = (state = initialAuthState, action = authActions) => {
    switch (action.type) {
-      case 'LOGIN':
-         return { ...state, info: { ...action.payload } }
-      case 'LOGOUT':
-         return { ...state, info: { login: null, bill: null }, uid: null }
-      case 'SING_UP':
-         return { ...state, info: { ...action.payload } }
-      case 'SET_INFO':
-         return { ...state, info: { ...action.payload } }
+      case 'RECORDS/FETCH_RECORDS':
+         return { ...state, records: action.payload }
+      case 'RECORDS/REMOVE_RECORD':
+         return { ...state, records: [action.payload] }
+      case 'RECORDS/CREATE_RECORD':
+         return { ...state, records: [...state.records, action.payload] }
 
       default:
          return state;
@@ -27,12 +26,20 @@ export const authActions = {
    setInfoAction: ({ login, uid, bill }) => ({ type: 'FETCH_INFO', payload: { login, uid, bill } })
 }
 
-export const loginThunk = (email, password) => async (dispatch) => {
+export const fetchRecord = () => async (dispatch) => {
+   const records = await recordsApi.fetchRecords()
+   dispatch({
+      type: 'RECORDS/FETCH_RECORDS',
+      payload: records
+   })
+}
+export const removeRecord = (recordId) => async (dispatch) => {
 
 }
-export const singUpThunk = (email, password, login) => async (dispatch) => {
+export const createRecord = async (dispatch) => {
 
 }
-export const logoutThunk = async (dispatch) => {
-
-}
+// const fetchRecordById = async (id) => {
+//    const record = await recordsApi()
+//    return record
+// }

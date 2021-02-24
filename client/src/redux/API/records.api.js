@@ -1,31 +1,49 @@
-import axios from axios
+import axios from 'axios'
 
 export const recordsApi = {
-   async fetchRecords() {
+
+   async fetchRecords(token) {
       try {
-         const response = await axios.get('/api/records')
-         const data = response.json()
-         return data
+         const response = await axios.get('/api/records', {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         console.log(response)
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e
       }
    },
-   async fetchRecordById(recordId) {
+   async fetchRecordById(recordId, token) {
       try {
-         const response = await axios.get(`/api/records/${recordId}`)
-         const data = response.json()
-         return data
+         const response = await axios.get(`/api/records/${recordId}`, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         console.log(response)
+
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e
       }
    },
-   async deleteRecordById(recordId) {
+   async deleteRecordById(recordId, token) {
       try {
-         const response = await axios.delete(`/api/records/${recordId}`)
-         const data = response.json()
-         return data
+         const response = await axios.delete(`/api/records/${recordId}`, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
+         console.log(response)
+
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e
@@ -34,12 +52,15 @@ export const recordsApi = {
    async createRecord(record, token) {
       try {
          const response = await axios.get('/api/records', { record }, {
-            header: {
-               Authorization: `Bearer ${token}`
+            headers: {
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json'
             }
          })
-         const data = response.json()
-         return data
+         console.log(response)
+
+         // const data = response.json()
+         // return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
          throw e

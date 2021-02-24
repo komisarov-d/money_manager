@@ -1,52 +1,47 @@
+import { authApi } from "../API/auth.api"
 
 const initialAuthState = {
-   isAuth: true,
-   login: 'Dima',
-   bill: 12500,
+   isAuth: false,
+   login: null,
+   bill: null,
    userId: null,
    token: null
 }
+const LStorage = 'MMLocalStorage'
 
-
-export const authReducer = (state = initialAuthState, action = authActions) => {
+export const authReducer = (state = initialAuthState, action) => {
    switch (action.type) {
       case 'AUTH/LOGIN':
-         return { ...state, info: { ...action.payload } }
+         return { ...state, ...action.payload, isAuth: true }
       case 'AUTH/LOGOUT':
-         return { ...state, info: { login: null, bill: null, uid: null, token: null } }
-      case 'AUTH/SING_UP':
-         return { ...state, info: { ...action.payload } }
+         return { ...state, login: null, bill: null, uid: null, token: null, isAuth: false }
       default:
          return state;
    }
 }
-export const authActions = {
-   loginAction: (login, uid) => ({ type: 'LOGIN', payload: { login, uid } }),
-   logoutAction: () => ({ type: 'LOGOUT' }),
-   singUpAction: (login, uid) => ({ type: 'SING_IN', payload: { login, uid } }),
-   setInfoAction: ({ login, uid, bill }) => ({ type: 'FETCH_INFO', payload: { login, uid, bill } })
-}
 
-export const loginThunk = (email, password) => async (dispatch) => {
+export const loginAction = (email, password) => async (dispatch) => {
    try {
+      const data = await authApi.login(email, password)
+      localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
+      dispatch({
+         type: 'AUTH/LOGIN',
+         payload: data
+      })
 
    } catch (e) {
-
+      console.log(e.message)  //Change om message
    }
 }
-export const singUpThunk = (email, password, login) => async (dispatch) => {
+export const singUpAction = async ({ email, password, name }) => {
    try {
-
-   } catch (e) {
-
-   }
+      await authApi.singUp(email, password, name)
+   } catch (e) { }
 }
-export const logoutThunk = async (dispatch) => {
-   try {
 
-   } catch (e) {
-
-   }
+export const logoutAction = async (dispatch) => {
+   dispatch({ type: 'AUTH/LOGOUT' })
+   localStorage.removeItem(LStorage)
 }
 
 

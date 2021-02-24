@@ -1,59 +1,101 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { NavLink, useHistory } from 'react-router-dom'
+import { singUpAction } from '../../../redux/reducers/authReducer'
+import { useMessage } from '../../common/Message/Message'
 
 
 export const SingUpPage = () => {
+   const showMessage = useMessage()
+   const dispatch = useDispatch()
+   const history = useHistory()
+   const [singUpForm, setSingUpForm] = useState({
+      email: '',
+      password: '',
+      name: '',
+      agree: false
+   })
+   const formChangeHandler = e => {
+      setSingUpForm({ ...singUpForm, [e.target.name]: e.target.value })
+   }
+   const singUpHandler = (e) => {
+      e.preventDefault()
+      if (singUpForm.agree === false) {
+         showMessage('Требуется согласие с правилами.')
+         return
+      }
 
+      dispatch(singUpAction(singUpForm))
+      history.push('/home')
+   }
    return (
-      <form class="card auth-card">
-         <div class="card-content">
-            <span class="card-title">Домашняя бухгалтерия</span>
-            <div class="input-field">
+      <form className="card auth-card">
+         <div className="card-content">
+            <span className="card-title">Домашняя бухгалтерия</span>
+            <div className="input-field">
                <input
                   id="email"
                   type="text"
+                  name='email'
+                  value={singUpForm.email}
+                  onChange={formChangeHandler}
                />
-               <label for="email">Email</label>
-               <small class="helper-text invalid">Email</small>
+               <label htmlFor="email">Email</label>
+
             </div>
-            <div class="input-field">
+            <div className="input-field">
                <input
                   id="password"
                   type="password"
-                  class="validate"
+                  name='password'
+                  className="validate"
+                  onChange={formChangeHandler}
+                  value={singUpForm.password}
+
                />
-               <label for="password">Пароль</label>
-               <small class="helper-text invalid">Password</small>
+               <label htmlFor="password">Пароль</label>
+
             </div>
-            <div class="input-field">
+            <div className="input-field">
                <input
                   id="name"
                   type="text"
-                  class="validate"
+                  className="validate"
+                  onChange={formChangeHandler}
+                  value={singUpForm.name}
+                  name='name'
+
                />
-               <label for="name">Имя</label>
-               <small class="helper-text invalid">Name</small>
+               <label htmlFor="name">Имя</label>
+
             </div>
             <p>
                <label>
-                  <input type="checkbox" />
+                  <input
+                     type="checkbox"
+                     onChange={formChangeHandler}
+                     checked={singUpForm.agree}
+                     name="agree"
+                  />
                   <span>С правилами согласен</span>
                </label>
             </p>
          </div>
-         <div class="card-action">
+         <div className="card-action">
             <div>
                <button
-                  class="btn waves-effect waves-light auth-submit"
+                  onClick={singUpHandler}
+                  className="btn waves-effect waves-light auth-submit"
                   type="submit"
                >
                   Зарегистрироваться
-        <i class="material-icons right">send</i>
+        <i className="material-icons right">send</i>
                </button>
             </div>
 
-            <p class="center">
+            <p className="center">
                Уже есть аккаунт?
-      <a href="/">Войти!</a>
+      <NavLink style={{ paddingLeft: '10px' }} to={'/login'}>Войти!</NavLink>
             </p>
          </div>
       </form>

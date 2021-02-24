@@ -1,44 +1,69 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../../../redux/reducers/authReducer'
 
 export const LoginPage = () => {
+   const dispatch = useDispatch()
+   const [loginForm, setLoginForm] = useState({
+      email: '',
+      password: ''
+   })
+   const formChangeHandler = e => {
+      setLoginForm({ ...loginForm, [e.target.name]: e.target.value })
+   }
+   const loginHandler = (e) => {
+      e.preventDefault()
+      if (loginForm.email && loginForm.password) {
+         dispatch(loginAction(loginForm))
+      }
+   }
 
    return (
-      <form class="card auth-card">
-         <div class="card-content">
-            <span class="card-title">Домашняя бухгалтерия</span>
-            <div class="input-field">
+      <form className="card auth-card">
+         <div className="card-content">
+            <span className="card-title">Домашняя бухгалтерия</span>
+            <div className="input-field">
                <input
                   id="email"
                   type="text"
-                  class="validate"
+                  className="validate"
+                  value={loginForm.email}
+                  name='email'
+                  onChange={formChangeHandler}
                />
-               <label for="email">Email</label>
-               <small class="helper-text invalid">Email</small>
+               <label htmlFor="email">Email</label>
+
             </div>
-            <div class="input-field">
+            <div className="input-field">
                <input
                   id="password"
                   type="password"
-                  class="validate"
+                  className="validate"
+                  value={loginForm.password}
+                  name='password'
+                  onChange={formChangeHandler}
+
                />
-               <label for="password">Пароль</label>
-               <small class="helper-text invalid">Password</small>
+               <label htmlFor="password">Пароль</label>
+
             </div>
          </div>
-         <div class="card-action">
+         <div className="card-action">
             <div>
                <button
-                  class="btn waves-effect waves-light auth-submit"
+                  className="btn waves-effect waves-light auth-submit"
                   type="submit"
+                  onClick={loginHandler}
                >
                   Войти
-        <i class="material-icons right">send</i>
+        <i className="material-icons right">send</i>
                </button>
             </div>
 
-            <p class="center">
+            <p className="center">
                Нет аккаунта?
-      <a href="/">Зарегистрироваться</a>
+      <NavLink style={{ paddingLeft: '10px' }} to={'/singup'}>Зарегистрироваться</NavLink>
             </p>
          </div>
       </form>

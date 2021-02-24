@@ -27,7 +27,7 @@ export const useRouter = (isAuth) => {
                   <div className="app-page">
                      <Switch>
                         <Suspense fallback={<div><Loader /></div>}>
-                           <Route exact path={'/home'} >
+                           <Route exact path={'/'} >
                               <HomePage />
                            </Route>
                            <Route exact path={'/categories'} >
@@ -48,9 +48,9 @@ export const useRouter = (isAuth) => {
                            <Route exact path={'/planning'} >
                               <PlanningPage />
                            </Route>
-
+                           <Redirect to={'/'} />
                         </Suspense>
-                        <Redirect to={'/home'} />
+
                      </Switch>
                   </div>
                </main>
@@ -72,12 +72,12 @@ export const useRouter = (isAuth) => {
                      <Route exact path={'/login'}>
                         <LoginPage />
                      </Route>
-                     <Route exact path={'/singin'}>
+                     <Route exact path={'/singup'}>
                         <SingUpPage />
                      </Route>
                      <Redirect to={'/login'} />
                   </Suspense>
-                  <Redirect to={'/login'} />
+
                </Switch>
             </div></div>
       )
