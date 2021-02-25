@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export const CategoriesPage = () => {
    document.title = 'Categories'
 
@@ -8,6 +9,7 @@ export const CategoriesPage = () => {
       <div>
          <div className="page-title">
             <h3>Категории</h3>
+
          </div>
          <section>
             <div className="row">
@@ -23,7 +25,7 @@ export const CategoriesPage = () => {
                               id="name"
                               type="text"
                            />
-                           <label for="name">Название</label>
+                           <label htmlFor="name">Название</label>
                            <span className="helper-text invalid">Введите название</span>
                         </div>
 
@@ -32,7 +34,7 @@ export const CategoriesPage = () => {
                               id="limit"
                               type="number"
                            />
-                           <label for="limit">Лимит</label>
+                           <label htmlFor="limit">Лимит</label>
                            <span className="helper-text invalid">Минимальная величина</span>
                         </div>
 

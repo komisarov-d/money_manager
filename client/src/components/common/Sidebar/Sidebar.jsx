@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 export const Sidebar = (props) => {
 
+
    return (
 
       <ul className={['sidenav', 'app-sidenav', props.open].join(' ')}>
@@ -22,6 +23,7 @@ export const Sidebar = (props) => {
          <li>
             <NavLink to="/categories" className="waves-effect waves-orange pointer">Категории</NavLink>
          </li>
+
       </ul>
 
    )

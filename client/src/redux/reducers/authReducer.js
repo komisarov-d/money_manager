@@ -1,5 +1,5 @@
 import { authApi } from "../API/auth.api"
-
+import { toastMessage } from './commonReducer'
 const initialAuthState = {
    isAuth: false,
    login: null,
@@ -30,20 +30,33 @@ export const loginAction = (email, password) => async (dispatch) => {
       })
 
    } catch (e) {
-      console.log(e.message)  //Change om message
+      toastMessage(e.message)
    }
 }
-export const singUpAction = async ({ email, password, name }) => {
+export const singUpAction = ({ email, password, name }) => async (dispatch) => {
    try {
-      await authApi.singUp(email, password, name)
-   } catch (e) { }
+      const data = await authApi.singUp(email, password, name)
+      localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
+      dispatch({
+         type: 'AUTH/LOGIN',
+         payload: data.user
+      })
+   } catch (e) {
+      toastMessage(e.message)
+   }
+}
+
+export const fetchInfoAction = (token) => async (dispatch) => {
+   const localData = localStorage.getItem(LStorage)
+   if (localData !== null) {
+      const data = await authApi.fetchInfo(token)
+      dispatch({ type: 'AUTH/SET_INFO', payload: data })
+   }
+
 }
 
 export const logoutAction = async (dispatch) => {
    dispatch({ type: 'AUTH/LOGOUT' })
    localStorage.removeItem(LStorage)
 }
-
-
-
 

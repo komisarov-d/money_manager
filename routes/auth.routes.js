@@ -29,7 +29,12 @@ router.post('/singup',
          const hashedPassword = await bcrypt.hash(password, 12)
          const user = new User({ email, password: hashedPassword, name })
          await user.save()
-         res.status(201).json({ message: 'Пользователь успешно создан.' })
+         const token = jwt.sign(
+            { userId: user.id },
+            config.get('jwtSecret'),
+            { expiresIn: '10h' }
+         )
+         res.status(201).json({ token, userId: user.id, user })
       } catch (e) {
          return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
       }
@@ -67,13 +72,9 @@ router.post('/login',
       }
    })
 
-router.post('/info', auth, async (req, res) => {
+router.get('/info', auth, async (req, res) => {
    try {
-
       const user = await User.findOne(req.user.userId)
-      if (!user) {
-         return res.status(400).json({ message: 'Пользователь с таким имейлом не найден.' })
-      }
       res.json({ user })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })

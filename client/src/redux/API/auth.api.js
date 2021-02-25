@@ -3,7 +3,6 @@ import axios from 'axios'
 export const authApi = {
    async singUp(email, password, name) {
       try {
-
          const response = await axios.post('/api/auth/singup', { email, password, name }, {
             headers: {
                'Content-Type': 'application/json'
@@ -13,7 +12,6 @@ export const authApi = {
          console.log(response);
       } catch (e) {
          console.log(`Error: ${e.message}`)
-         throw e
       }
    },
    async login(email, password) {
@@ -27,7 +25,19 @@ export const authApi = {
          return data
       } catch (e) {
          console.log(`Error: ${e.message}`)
-         throw e
+      }
+   },
+   async fetchInfo(token) {
+      try {
+         const response = await axios.post('/api/auth/info', {
+            headers: {
+               Authorization: `Bearer: ${token}`
+            }
+         })
+         const data = response.json()
+         return data
+      } catch (e) {
+         console.log(`Error: ${e.message}`)
       }
    }
 }

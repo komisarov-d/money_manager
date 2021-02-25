@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export const HomePage = () => {
    document.title = 'Home page'
    // const currency = [

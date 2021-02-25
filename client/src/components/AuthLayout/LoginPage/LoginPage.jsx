@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../../../redux/reducers/authReducer'
 
+
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const [loginForm, setLoginForm] = useState({
@@ -18,6 +19,7 @@ export const LoginPage = () => {
          dispatch(loginAction(loginForm))
       }
    }
+
 
    return (
       <form className="card auth-card">
@@ -66,6 +68,7 @@ export const LoginPage = () => {
       <NavLink style={{ paddingLeft: '10px' }} to={'/singup'}>Зарегистрироваться</NavLink>
             </p>
          </div>
+
       </form>
    )
 

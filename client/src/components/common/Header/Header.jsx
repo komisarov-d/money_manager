@@ -44,7 +44,7 @@ export const Header = (props) => {
                            <NavLink to='/profile' className="black-text">
                               <i className="material-icons">account_circle</i>Профиль</NavLink>
                         </li>
-                        <li className="divider" tabindex="-1"></li>
+                        <li className="divider" tabIndex="-1"></li>
                         <li>
                            <NavLink to='/login' className="black-text">
                               <i className="material-icons">assignment_return</i>
