@@ -16,13 +16,14 @@ export const LoginPage = () => {
    const loginHandler = (e) => {
       e.preventDefault()
       if (loginForm.email && loginForm.password) {
+         console.log(loginForm);
          dispatch(loginAction(loginForm))
       }
    }
 
 
    return (
-      <form className="card auth-card">
+      <form className="card auth-card" onSubmit={loginHandler}>
          <div className="card-content">
             <span className="card-title">Домашняя бухгалтерия</span>
             <div className="input-field">
@@ -56,7 +57,7 @@ export const LoginPage = () => {
                <button
                   className="btn waves-effect waves-light auth-submit"
                   type="submit"
-                  onClick={loginHandler}
+
                >
                   Войти
         <i className="material-icons right">send</i>

@@ -9,19 +9,22 @@ export const authApi = {
             }
          }
          )
-         console.log(response);
+
+         return response
       } catch (e) {
          console.log(`Error: ${e.message}`)
       }
    },
    async login(email, password) {
+
       try {
          const response = await axios.post('/api/auth/login', { email, password }, {
             headers: {
                'Content-Type': 'application/json'
             }
          })
-         const data = response.json()
+         const data = response.data
+
          return data
       } catch (e) {
          console.log(`Error: ${e.message}`)

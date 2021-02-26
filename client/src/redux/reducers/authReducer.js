@@ -20,13 +20,14 @@ export const authReducer = (state = initialAuthState, action) => {
    }
 }
 
-export const loginAction = (email, password) => async (dispatch) => {
+export const loginAction = ({ email, password }) => async (dispatch) => {
    try {
       const data = await authApi.login(email, password)
       localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
+
       dispatch({
          type: 'AUTH/LOGIN',
-         payload: data
+         payload: data.user
       })
 
    } catch (e) {
@@ -37,6 +38,7 @@ export const singUpAction = ({ email, password, name }) => async (dispatch) => {
    try {
       const data = await authApi.singUp(email, password, name)
       localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
+
       dispatch({
          type: 'AUTH/LOGIN',
          payload: data.user
@@ -48,7 +50,7 @@ export const singUpAction = ({ email, password, name }) => async (dispatch) => {
 
 export const fetchInfoAction = (token) => async (dispatch) => {
    const localData = localStorage.getItem(LStorage)
-   if (localData !== null) {
+   if (localData && localData.token) {
       const data = await authApi.fetchInfo(token)
       dispatch({ type: 'AUTH/SET_INFO', payload: data })
    }

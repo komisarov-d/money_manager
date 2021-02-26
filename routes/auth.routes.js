@@ -47,6 +47,7 @@ router.post('/login',
    ]
    , async (req, res) => {
       try {
+         console.log(req.body);
          const errors = validationResult(req.body)
          if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при регистрации' })
@@ -66,7 +67,7 @@ router.post('/login',
             config.get('jwtSecret'),
             { expiresIn: '10h' }
          )
-         res.json({ token, userId: user.id, name: user.name })
+         res.json({ token, userId: user.id, user })
       } catch (e) {
          return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
       }

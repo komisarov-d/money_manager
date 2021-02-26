@@ -67,3 +67,8 @@ export const recordsApi = {
       }
    }
 }
+
+export const fetchCurrency = async () => {
+   const currency = await fetch(`https://api.exchangerate-api.com/v4/latest/UAH`)
+   return await currency.json()
+}
