@@ -15,7 +15,7 @@ export const ProfilePage = () => {
                   id="description"
                   type="text"
                />
-               <label for="description">Имя</label>
+               <label htmlFor="description">Имя</label>
                <span
                   className="helper-text invalid">name</span>
             </div>

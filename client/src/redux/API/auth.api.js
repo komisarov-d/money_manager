@@ -7,40 +7,37 @@ export const authApi = {
             headers: {
                'Content-Type': 'application/json'
             }
-         }
-         )
-
+         })
          return response
       } catch (e) {
-         console.log(`Error: ${e.message}`)
+         throw e.response.data.message
       }
    },
    async login(email, password) {
-
       try {
          const response = await axios.post('/api/auth/login', { email, password }, {
             headers: {
                'Content-Type': 'application/json'
             }
          })
-         const data = response.data
 
+         const data = response.data
          return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
+         throw e.response.data.message
       }
    },
    async fetchInfo(token) {
       try {
-         const response = await axios.post('/api/auth/info', {
+         const response = await axios.get('/api/auth/info', {
             headers: {
                Authorization: `Bearer: ${token}`
             }
          })
-         const data = response.json()
+         const data = response.data
          return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
+         throw e.response.data.message
       }
    }
 }

@@ -1,7 +1,8 @@
 
 const initialCommonState = {
    loading: false,
-   message: null
+   message: null,
+   isReady: false
 }
 
 
@@ -15,6 +16,8 @@ export const commonReducer = (state = initialCommonState, action) => {
          return { ...state, message: action.payload }
       case 'COMMON/CLEAR_MESSAGE':
          return { ...state, message: null }
+      case 'COMMON/SET_READY':
+         return { ...state, isReady: true }
       default:
          return state;
    }
@@ -26,6 +29,6 @@ export const toastMessage = (newMessage) => (dispatch) => {
       dispatch({ type: 'COMMON/CLEAR_MESSAGE' })
    }, 4000);
 }
-
 export const showLoader = () => ({ type: 'COMMON/SHOW_LOADER' })
 export const hideLoader = () => ({ type: 'COMMON/HIDE_LOADER' })
+export const setReady = () => ({ type: 'COMMON/SET_READY' })

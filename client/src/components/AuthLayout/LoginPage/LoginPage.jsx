@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../../../redux/reducers/authReducer'
 
-
 export const LoginPage = () => {
    const dispatch = useDispatch()
    const [loginForm, setLoginForm] = useState({
@@ -13,14 +12,11 @@ export const LoginPage = () => {
    const formChangeHandler = e => {
       setLoginForm({ ...loginForm, [e.target.name]: e.target.value })
    }
+
    const loginHandler = (e) => {
       e.preventDefault()
-      if (loginForm.email && loginForm.password) {
-         console.log(loginForm);
-         dispatch(loginAction(loginForm))
-      }
+      dispatch(loginAction(loginForm))
    }
-
 
    return (
       <form className="card auth-card" onSubmit={loginHandler}>
@@ -29,14 +25,13 @@ export const LoginPage = () => {
             <div className="input-field">
                <input
                   id="email"
-                  type="text"
+                  type="email"
                   className="validate"
                   value={loginForm.email}
                   name='email'
                   onChange={formChangeHandler}
                />
                <label htmlFor="email">Email</label>
-
             </div>
             <div className="input-field">
                <input
@@ -46,10 +41,8 @@ export const LoginPage = () => {
                   value={loginForm.password}
                   name='password'
                   onChange={formChangeHandler}
-
                />
                <label htmlFor="password">Пароль</label>
-
             </div>
          </div>
          <div className="card-action">
@@ -57,19 +50,14 @@ export const LoginPage = () => {
                <button
                   className="btn waves-effect waves-light auth-submit"
                   type="submit"
-
-               >
-                  Войти
-        <i className="material-icons right">send</i>
+               >Войти<i className="material-icons right">send</i>
                </button>
             </div>
-
             <p className="center">
                Нет аккаунта?
       <NavLink style={{ paddingLeft: '10px' }} to={'/singup'}>Зарегистрироваться</NavLink>
             </p>
          </div>
-
       </form>
    )
 

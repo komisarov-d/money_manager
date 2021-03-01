@@ -60,7 +60,7 @@ export const CategoriesPage = () => {
 
                         <div className="input-field">
                            <input type="text" id="name" />
-                           <label for="name">Название</label>
+                           <label htmlFor="name">Название</label>
                            <span className="helper-text invalid">TITLE</span>
                         </div>
 
@@ -69,7 +69,7 @@ export const CategoriesPage = () => {
                               id="limit"
                               type="number"
                            />
-                           <label for="limit">Лимит</label>
+                           <label htmlFor="limit">Лимит</label>
                            <span className="helper-text invalid">LIMIT</span>
                         </div>
 

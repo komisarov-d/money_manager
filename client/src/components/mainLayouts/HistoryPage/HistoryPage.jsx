@@ -53,7 +53,7 @@ export const HistoryPage = () => {
    return (
       <div>
 
-         <div class="page-title">
+         <div className="page-title">
             <h3>История записей</h3>
          </div>
 

@@ -19,8 +19,6 @@ router.post('/singup',
          if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при регистрации' })
          }
-         console.log(req.body);
-
          const { email, password, name } = req.body
          const alreadyExists = await User.findOne({ email })
          if (alreadyExists) {
@@ -47,18 +45,16 @@ router.post('/login',
    ]
    , async (req, res) => {
       try {
-         console.log(req.body);
          const errors = validationResult(req.body)
          if (!errors.isEmpty) {
-            return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при регистрации' })
+            return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при входе в систему.' })
          }
          const { email, password } = req.body
          const user = await User.findOne({ email })
          if (!user) {
-            return res.status(400).json({ message: 'Пользователь с таким имейлом не найден.' })
+            return res.status(400).send({ message: 'Пользователь с таким имейлом не найден.' })
          }
          const passwordMatch = await bcrypt.compare(password, user.password)
-
          if (!passwordMatch) {
             res.status(400).json({ message: 'Некоректные данные при входе в систему.' })
          }
@@ -67,7 +63,7 @@ router.post('/login',
             config.get('jwtSecret'),
             { expiresIn: '10h' }
          )
-         res.json({ token, userId: user.id, user })
+         res.json({ token, userId: user.id })
       } catch (e) {
          return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
       }
@@ -75,7 +71,7 @@ router.post('/login',
 
 router.get('/info', auth, async (req, res) => {
    try {
-      const user = await User.findOne(req.user.userId)
+      const user = await User.findOne({ _id: req.user.userId })
       res.json({ user })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })

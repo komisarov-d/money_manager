@@ -1,26 +1,41 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from '../../../redux/reducers/authReducer'
+import { dateFilter } from '../../../redux/aside/dateFilter'
 
 export const Header = (props) => {
    const dispatch = useDispatch()
+
+   const [date, setDate] = useState(new Date())
+   // const [interval, changeInterval] = useState(null)
 
    const name = useSelector(state => state.auth.name)
    const asideToggle = (e) => {
       e.preventDefault()
       props.sidebarToggle()
    }
-   const logout = () => {
+   const logout = (e) => {
+      e.preventDefault()
       dispatch(logoutAction())
-
    }
    useEffect(() => {
       const dropDown = document.querySelector('.dropdown-trigger')
-      window.M.Dropdown.init(dropDown, { alignment: 'right' })
+      window.M.Dropdown.init(dropDown)
+   }, [])
+   const dateInterval = (interval) => {
+      setInterval(() => {
+         setDate(new Date())
+      }, interval);
+   }
+
+   useEffect(() => {
+      dateInterval(1000)
+      return () => {
+         dateInterval(null)
+      }
    }, [])
 
-   // const currentTime = new Date()
    return (
       <header >
          <nav className="navbar orange lighten-1">
@@ -29,7 +44,7 @@ export const Header = (props) => {
                   <span onClick={asideToggle} >
                      <i className="material-icons black-text">dehaze</i>
                   </span>
-                  <span className="black-text">Time</span>
+                  <span style={{ paddingLeft: '10px' }} className="black-text">{dateFilter(date, 'datetime')}</span>
                </div>
 
                <ul className="right hide-on-small-and-down">
@@ -49,9 +64,10 @@ export const Header = (props) => {
                         </li>
                         <li className="divider" tabIndex="-1"></li>
                         <li>
-                           <span onClick={logout} className="black-text">
+                           {/* eslint-disable-next-line */}
+                           <a onClick={logout} href='/' className="black-text">
                               <i className="material-icons">assignment_return</i>
-                              Выйти</span>
+                              Выйти</a>
                         </li>
                      </ul>
                   </li>

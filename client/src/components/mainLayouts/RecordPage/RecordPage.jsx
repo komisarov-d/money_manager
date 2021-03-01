@@ -47,7 +47,7 @@ export const RecordPage = () => {
                   id="amount"
                   type="number"
                />
-               <label for="amount">Сумма</label>
+               <label htmlFor="amount">Сумма</label>
                <span className="helper-text invalid">amount пароль</span>
             </div>
 
@@ -56,7 +56,7 @@ export const RecordPage = () => {
                   id="description"
                   type="text"
                />
-               <label for="description">Описание</label>
+               <label htmlFor="description">Описание</label>
                <span
                   className="helper-text invalid">description пароль</span>
             </div>
