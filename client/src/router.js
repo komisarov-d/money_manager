@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, NavLink } from 'react-router-dom'
 import { Header } from './components/common/Header/Header'
 import { Sidebar } from './components/common/Sidebar/Sidebar'
 import { LoginPage } from './components/AuthLayout/LoginPage/LoginPage'
@@ -28,40 +28,43 @@ export const useRouter = (isAuth) => {
                <Sidebar open={open} />
                <main className={["app-content", open ? '' : 'full'].join(' ')}>
                   <div className="app-page">
-                     {loading && <Loader />}
+                     {loading ? <Loader />
+                        :
 
-                     <Switch>
 
-                        <Route exact path={'/'} >
-                           <HomePage />
-                        </Route>
-                        <Route exact path={'/categories'} >
-                           <CategoriesPage />
-                        </Route>
-                        <Route exact path={'/history'} >
-                           <HistoryPage />
-                        </Route>
-                        <Route exact path={'/record'} >
-                           <RecordPage />
-                        </Route>
-                        <Route path={'/detail/:id'} >
-                           <DetailPage />
-                        </Route>
-                        <Route exact path={'/profile'} >
-                           <ProfilePage />
-                        </Route>
-                        <Route exact path={'/planning'} >
-                           <PlanningPage />
-                        </Route>
-                        <Redirect to={'/'} />
+                        <Switch>
 
-                     </Switch>
+                           <Route exact path={'/'} >
+                              <HomePage />
+                           </Route>
+                           <Route exact path={'/categories'} >
+                              <CategoriesPage />
+                           </Route>
+                           <Route exact path={'/history'} >
+                              <HistoryPage />
+                           </Route>
+                           <Route exact path={'/record'} >
+                              <RecordPage />
+                           </Route>
+                           <Route path={'/detail/:id'} >
+                              <DetailPage />
+                           </Route>
+                           <Route exact path={'/profile'} >
+                              <ProfilePage />
+                           </Route>
+                           <Route exact path={'/planning'} >
+                              <PlanningPage />
+                           </Route>
+                           <Redirect to={'/'} />
+
+                        </Switch>
+                     }
                   </div>
                </main>
                <div className="fixed-action-btn">
-                  <a className="btn-floating btn-large blue" href="/record">
+                  <NavLink className="btn-floating btn-large blue" to="/record">
                      <i className="large material-icons">add</i>
-                  </a>
+                  </NavLink>
                </div>
             </div>
          </div>

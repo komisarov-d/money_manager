@@ -1,71 +1,71 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { dateFilter } from '../../../redux/aside/dateFilter'
+import { Fetch, hideLoader } from '../../../redux/reducers/commonReducer'
+import { Bill } from './hpPartials/Bill'
+import { CurrencyTable } from './hpPartials/CurrencyTable'
 
 
 export const HomePage = () => {
    document.title = 'Home page'
-   // const currency = [
-   //    { id: 1, name: 'UAH', curr: 33.31, date: '1 april' },
-   //    { id: 2, name: 'EUR', curr: 133.31, date: '2 may' },
-   //    { id: 3, name: 'DOL', curr: 23.31, date: '13 august' }
-   // ]
-   // const money = [
-   //    { name: 'UAH', moneyItems: 32000, suf: 'грн' },
-   //    { name: 'DOL', moneyItems: 1200, suf: 'дол' },
-   //    { name: 'EUR', moneyItems: 1000, suf: 'евр' }
-   // ]
+
+   const [currency, setCurrency] = useState({})
+   const bill = useSelector(state => state.auth.bill)
+   const dispatch = useDispatch()
+   const currencies = ['UAH', 'EUR', 'USD']
+
+   const updateCurrency = useCallback(async () => {
+      const fetchedCurrency = await Fetch()
+      setCurrency(fetchedCurrency)
+      dispatch(hideLoader())
+   }, [dispatch])
+
+   useEffect(() => {
+      updateCurrency()
+   }, [updateCurrency])
+
+   const getCurrency = (curr) => {
+      if (currency.rates !== undefined) {
+         return Math.floor(bill * currency.rates[curr])
+      }
+   }
+
+   const currEl = []
+   const ratesEl = []
+   if (currency.rates) {
+      for (const curr of currencies) {
+         currEl.push(
+            <p key={curr} className="currency-line">
+               <span>{`${getCurrency(curr)} ${curr}`}</span>
+            </p>
+         )
+      }
+      for (const curr of currencies) {
+         ratesEl.push(
+            <tr key={curr}>
+               <td>{curr}</td>
+               <td>{currency.rates[curr].toFixed(4)}</td>
+               <td>{dateFilter(currency.date)}</td>
+            </tr>
+         )
+      }
+   }
 
    return (
       <div>
          <div className="page-title">
             <h3>Счет</h3>
-
-            <button className="btn waves-effect waves-light btn-small">
+            <button onClick={updateCurrency} className="btn waves-effect waves-light btn-small">
                <i className="material-icons">refresh</i>
             </button>
          </div>
-
          <div className="row">
-            <div className="col s12 m6 l4">
-               <div className="card light-blue bill-card">
-                  <div className="card-content white-text">
-                     <span className="card-title">Счет в валюте</span>
-
-                     <p className="currency-line">
-                        <span>12.0 Р</span>
-                     </p>
-                  </div>
-               </div>
-            </div>
-
-            <div className="col s12 m6 l8">
-               <div className="card orange darken-3 bill-card">
-                  <div className="card-content white-text">
-                     <div className="card-header">
-                        <span className="card-title">Курс валют</span>
-                     </div>
-                     <table>
-                        <thead>
-                           <tr>
-                              <th>Валюта</th>
-                              <th>Курс</th>
-                              <th>Дата</th>
-                           </tr>
-                        </thead>
-
-                        <tbody>
-                           <tr>
-                              <td>руб</td>
-                              <td>12121</td>
-                              <td>12.12.12</td>
-                           </tr>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
+            <Bill currEl={currEl} />
+            <CurrencyTable ratesEl={ratesEl} />
          </div>
       </div>
    )
+
 }
 
 

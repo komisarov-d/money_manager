@@ -1,8 +1,8 @@
-
 const initialCommonState = {
    loading: false,
    message: null,
-   isReady: false
+   isReady: false,
+   currency: {}
 }
 
 
@@ -18,6 +18,8 @@ export const commonReducer = (state = initialCommonState, action) => {
          return { ...state, message: null }
       case 'COMMON/SET_READY':
          return { ...state, isReady: true }
+      case 'COMMON/SET_CURRENCY':
+         return { ...state, currency: action.payload }
       default:
          return state;
    }
@@ -32,3 +34,15 @@ export const toastMessage = (newMessage) => (dispatch) => {
 export const showLoader = () => ({ type: 'COMMON/SHOW_LOADER' })
 export const hideLoader = () => ({ type: 'COMMON/HIDE_LOADER' })
 export const setReady = () => ({ type: 'COMMON/SET_READY' })
+export const setCurrency = (currency) => ({ type: 'COMMON/SET_CURRENCY', payload: currency })
+
+
+export const Fetch = async () => {
+   try {
+      const result = await fetch(`https://api.exchangerate-api.com/v4/latest/UAH`)
+      return result.json()
+   } catch {
+      Fetch()
+   }
+
+}

@@ -23,7 +23,7 @@ export const App = () => {
    // Local storage observ
    useEffect(() => {
       dispatch(fetchInfoAction())
-   })
+   }, [dispatch])
    if (!isReady) {
       return <Loader />
    }

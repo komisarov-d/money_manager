@@ -52,12 +52,18 @@ export const singUpAction = ({ email, password, name }, agree) => async (dispatc
 }
 
 export const fetchInfoAction = () => async (dispatch) => {
-   const localData = JSON.parse(localStorage.getItem(LStorage))
+   const localData = await JSON.parse(localStorage.getItem(LStorage))
    if (localData && localData.token) {
-      const data = await authApi.fetchInfo(localData.token)
-      dispatch({ type: 'AUTH/SET_INFO', payload: data.user })
-      dispatch(hideLoader())
+      try {
+         const data = await authApi.fetchInfo(localData.token)
+         dispatch({ type: 'AUTH/SET_INFO', payload: data.user })
+      } catch (e) {
+         dispatch(toastMessage(e))
+
+      }
+
    }
+   dispatch(hideLoader())
    dispatch(setReady())
 }
 
