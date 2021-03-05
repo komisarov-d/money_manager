@@ -1,42 +1,43 @@
 import axios from 'axios'
 
+
 export const categoriesApi = {
    async fetchCategories(token) {
       try {
-         const response = await axios.get('/api/categories', {}, {
+         const response = await axios.get('/api/category', {
             headers: {
-               Authorization: `Bearer ${token}`
+               Authorization: `Bearer: ${token}`
             }
          })
-         console.log(response)
-         // const data = response.json()
-         // return data
+         const categories = response.data.categories
+         return categories
+
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
+
       }
    },
-   async createCategory(category, token) {
+   async createCategory(title, limit, token) {
       try {
-         const response = await axios.post('/api/categories/create', { category }, {
+         const response = await axios.post('/api/category/create', { title, limit }, {
             headers: {
-               Authorization: `Bearer ${token}`,
+               Authorization: `Bearer: ${token}`,
                'Content-Type': 'application/json'
             }
          })
-         console.log(response)
-         // const data = response.json()
-         // return data
+         const categories = response.data.categories
+         return categories
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         console.log('warrning');
+         throw e.response.data.message
+
       }
    },
    async updateCategory(categoryId, updatedCategory, token) {
       try {
-         const response = await axios.post(`/api/categories/update/${categoryId}`, { updatedCategory }, {
+         const response = await axios.post(`/api/category/update/${categoryId}`, { updatedCategory }, {
             headers: {
-               Authorization: `Bearer ${token}`,
+               Authorization: `Bearer: ${token}`,
                'Content-Type': 'application/json'
             }
          })
@@ -44,8 +45,7 @@ export const categoriesApi = {
          // const data = response.json()
          // return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
       }
    }
 }

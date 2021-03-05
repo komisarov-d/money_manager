@@ -13,8 +13,8 @@ export const recordsApi = {
          // const data = response.json()
          // return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
+
       }
    },
    async fetchRecordById(recordId, token) {
@@ -29,8 +29,8 @@ export const recordsApi = {
          // const data = response.json()
          // return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
+
       }
    },
    async deleteRecordById(recordId, token) {
@@ -45,8 +45,8 @@ export const recordsApi = {
          // const data = response.json()
          // return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
+
       }
    },
    async createRecord(record, token) {
@@ -62,8 +62,7 @@ export const recordsApi = {
          // const data = response.json()
          // return data
       } catch (e) {
-         console.log(`Error: ${e.message}`)
-         throw e
+         throw e.response.data.message
       }
    }
 }

@@ -12,13 +12,12 @@ import { RecordPage } from './components/mainLayouts/RecordPage/RecordPage'
 import { ProfilePage } from './components/mainLayouts/ProfilePage/ProfilePage'
 import { HistoryPage } from './components/mainLayouts/HistoryPage/HistoryPage'
 import { Loader } from './components/common/Loader/Loader'
-import { useSelector } from 'react-redux'
 
 export const useRouter = (isAuth) => {
 
    const [open, toggleOpen] = useState('')
    const sidebarToggle = () => open === '' ? toggleOpen('open') : toggleOpen('')
-   const loading = useSelector(state => state.common.loading)
+
 
    if (isAuth) {
       return (
@@ -28,37 +27,31 @@ export const useRouter = (isAuth) => {
                <Sidebar open={open} />
                <main className={["app-content", open ? '' : 'full'].join(' ')}>
                   <div className="app-page">
-                     {loading ? <Loader />
-                        :
+                     <Switch>
+                        <Route exact path={'/'} >
+                           <HomePage />
+                        </Route>
+                        <Route exact path={'/categories'} >
+                           <CategoriesPage />
+                        </Route>
+                        <Route exact path={'/history'} >
+                           <HistoryPage />
+                        </Route>
+                        <Route exact path={'/record'} >
+                           <RecordPage />
+                        </Route>
+                        <Route path={'/detail/:id'} >
+                           <DetailPage />
+                        </Route>
+                        <Route exact path={'/profile'} >
+                           <ProfilePage />
+                        </Route>
+                        <Route exact path={'/planning'} >
+                           <PlanningPage />
+                        </Route>
+                        <Redirect to={'/'} />
 
-
-                        <Switch>
-
-                           <Route exact path={'/'} >
-                              <HomePage />
-                           </Route>
-                           <Route exact path={'/categories'} >
-                              <CategoriesPage />
-                           </Route>
-                           <Route exact path={'/history'} >
-                              <HistoryPage />
-                           </Route>
-                           <Route exact path={'/record'} >
-                              <RecordPage />
-                           </Route>
-                           <Route path={'/detail/:id'} >
-                              <DetailPage />
-                           </Route>
-                           <Route exact path={'/profile'} >
-                              <ProfilePage />
-                           </Route>
-                           <Route exact path={'/planning'} >
-                              <PlanningPage />
-                           </Route>
-                           <Redirect to={'/'} />
-
-                        </Switch>
-                     }
+                     </Switch>
                   </div>
                </main>
                <div className="fixed-action-btn">

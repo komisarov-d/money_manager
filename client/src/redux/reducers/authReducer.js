@@ -1,6 +1,6 @@
 import { authApi } from "../API/auth.api"
 import { hideLoader, setReady, showLoader, toastMessage } from './commonReducer'
-const initialAuthState = {
+export const initialAuthState = {
    isAuth: false,
    login: null,
    bill: null,

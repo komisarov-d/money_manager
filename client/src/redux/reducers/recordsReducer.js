@@ -1,12 +1,10 @@
 import { recordsApi } from "../API/records.api"
 
-
-const initialAuthState = {
+const initialRecordsState = {
    records: []
 }
 
-
-export const recordsReducer = (state = initialAuthState, action = authActions) => {
+export const recordsReducer = (state = initialRecordsState, action) => {
    switch (action.type) {
       case 'RECORDS/FETCH_RECORDS':
          return { ...state, records: action.payload }

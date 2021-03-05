@@ -1,86 +1,36 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { CreateCateg } from './cpPartials/CreateCateg'
+import { UpdateCateg } from './cpPartials/UpdateCateg'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCategories } from '../../../redux/reducers/categoriesReducer'
+import { Loader } from '../../common/Loader/Loader'
 
 export const CategoriesPage = () => {
    document.title = 'Categories'
+   const loading = useSelector(state => state.common.loading)
+   const dispatch = useDispatch()
+   const categories = useSelector(state => state.categories.categories)
+
+   useEffect(() => {
+      dispatch(fetchCategories())
+
+   }, [dispatch])
 
    return (
-
       <div>
          <div className="page-title">
             <h3>Категории</h3>
-
          </div>
-         <section>
-            <div className="row">
-               <div className="col s12 m6">
-                  <div>
-                     <div className="page-subtitle">
-                        <h4>Создать</h4>
-                     </div>
-
-                     <form>
-                        <div className="input-field">
-                           <input
-                              id="name"
-                              type="text"
-                           />
-                           <label htmlFor="name">Название</label>
-                           <span className="helper-text invalid">Введите название</span>
-                        </div>
-
-                        <div className="input-field">
-                           <input
-                              id="limit"
-                              type="number"
-                           />
-                           <label htmlFor="limit">Лимит</label>
-                           <span className="helper-text invalid">Минимальная величина</span>
-                        </div>
-
-                        <button className="btn waves-effect waves-light" type="submit">
-                           Создать<i className="material-icons right">send</i>
-                        </button>
-                     </form>
-                  </div>
+         {loading ? <Loader />
+            :
+            <section>
+               <div className="row">
+                  <CreateCateg />
+                  {!categories.length ? <p>Категорий пока нет</p> : <UpdateCateg categories={categories} />}
                </div>
-               <div className="col s12 m6">
-                  <div>
-                     <div className="page-subtitle">
-                        <h4>Редактировать</h4>
-                     </div>
+            </section>}
 
-                     <form>
-                        <div className="input-field" >
-                           <select>
-                              <option>Category</option>
-                           </select>
-                           <label>Выберите категорию</label>
-                        </div>
 
-                        <div className="input-field">
-                           <input type="text" id="name" />
-                           <label htmlFor="name">Название</label>
-                           <span className="helper-text invalid">TITLE</span>
-                        </div>
-
-                        <div className="input-field">
-                           <input
-                              id="limit"
-                              type="number"
-                           />
-                           <label htmlFor="limit">Лимит</label>
-                           <span className="helper-text invalid">LIMIT</span>
-                        </div>
-
-                        <button className="btn waves-effect waves-light" type="submit">
-                           Обновить <i className="material-icons right">send</i>
-                        </button>
-                     </form>
-                  </div>
-               </div>
-            </div>
-         </section>
       </div>
    )
 }
