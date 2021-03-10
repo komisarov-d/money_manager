@@ -19,31 +19,26 @@ export const categoriesApi = {
    },
    async createCategory(title, limit, token) {
       try {
-         const response = await axios.post('/api/category/create', { title, limit }, {
+         await axios.post('/api/category/create', { title, limit }, {
             headers: {
                Authorization: `Bearer: ${token}`,
                'Content-Type': 'application/json'
             }
          })
-         const categories = response.data.categories
-         return categories
       } catch (e) {
-         console.log('warrning');
          throw e.response.data.message
-
       }
    },
-   async updateCategory(categoryId, updatedCategory, token) {
+   async updateCategory(id, title, limit, token) {
       try {
-         const response = await axios.post(`/api/category/update/${categoryId}`, { updatedCategory }, {
+         const response = await axios.post(`/api/category/update`, { id, title, limit }, {
             headers: {
                Authorization: `Bearer: ${token}`,
                'Content-Type': 'application/json'
             }
          })
-         console.log(response)
-         // const data = response.json()
-         // return data
+         const data = response.data
+         return data
       } catch (e) {
          throw e.response.data.message
       }

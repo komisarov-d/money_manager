@@ -30,9 +30,10 @@ router.post('/create', auth, async (req, res) => {
    }
 })
 
-router.post('/update/:id', auth, async (req, res) => {
+router.post('/update', auth, async (req, res) => {
    try {
-      const category = await Category.findById(req.params.id)
+      const { id } = req.body
+      const category = await Category.findById(id)
       if (!category) {
          return res.status(400).json({ message: 'Категория не найдена.' })
       }

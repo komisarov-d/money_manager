@@ -8,7 +8,8 @@ export const authApi = {
                'Content-Type': 'application/json'
             }
          })
-         return response
+         const data = response.data
+         return data
       } catch (e) {
          throw e.response.data.message
       }

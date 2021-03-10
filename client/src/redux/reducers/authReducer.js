@@ -29,6 +29,7 @@ export const loginAction = ({ email, password }) => async (dispatch) => {
       const data = await authApi.login(email, password)
       localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
       dispatch({ type: 'AUTH/LOGIN', payload: data.user })
+      dispatch(fetchInfoAction())
       dispatch(hideLoader())
    } catch (e) {
       dispatch(hideLoader())
@@ -44,6 +45,7 @@ export const singUpAction = ({ email, password, name }, agree) => async (dispatc
       const data = await authApi.singUp(email, password, name)
       localStorage.setItem(LStorage, JSON.stringify({ token: data.token, userId: data.userId }))
       dispatch({ type: 'AUTH/LOGIN', payload: data.user })
+      dispatch(fetchInfoAction())
       dispatch(hideLoader())
    } catch (e) {
       dispatch(hideLoader())
@@ -58,10 +60,8 @@ export const fetchInfoAction = () => async (dispatch) => {
          const data = await authApi.fetchInfo(localData.token)
          dispatch({ type: 'AUTH/SET_INFO', payload: data.user })
       } catch (e) {
-         dispatch(toastMessage(e))
-
+         dispatch(toastMessage('Войдите в систему.'))
       }
-
    }
    dispatch(hideLoader())
    dispatch(setReady())

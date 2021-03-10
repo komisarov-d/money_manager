@@ -33,6 +33,7 @@ export const Header = (props) => {
       dateInterval(1000)
       return () => {
          dateInterval(null)
+         setDate(null)
       }
    }, [])
 

@@ -7,14 +7,14 @@ import { Loader } from '../../common/Loader/Loader'
 
 export const CategoriesPage = () => {
    document.title = 'Categories'
-   const loading = useSelector(state => state.common.loading)
    const dispatch = useDispatch()
+   const loading = useSelector(state => state.common.loading)
    const categories = useSelector(state => state.categories.categories)
 
    useEffect(() => {
       dispatch(fetchCategories())
-
    }, [dispatch])
+
 
    return (
       <div>
