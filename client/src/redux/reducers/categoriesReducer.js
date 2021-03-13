@@ -32,8 +32,8 @@ export const fetchCategories = () => async (dispatch) => {
    }
 }
 export const updateCategory = (id, title, limit) => async (dispatch) => {
-   // if (title.length < 3) { return dispatch(toastMessage('Название не может быть короче 3 символов.')) }
-   // if (limit < 10) { return dispatch(toastMessage('Лимит не может быть менее 10.')) }
+   if (title.length < 3) { return dispatch(toastMessage('Название не может быть короче 3 символов.')) }
+   if (limit < 10) { return dispatch(toastMessage('Лимит не может быть менее 10.')) }
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
@@ -47,8 +47,8 @@ export const updateCategory = (id, title, limit) => async (dispatch) => {
    }
 }
 export const createCategory = ({ title, limit }) => async (dispatch) => {
-   // if (title.length < 3) { return dispatch(toastMessage('Название не может быть короче 3 символов.')) }
-   // if (limit < 10) { return dispatch(toastMessage('Лимит не может быть менее 10.')) }
+   if (title.length < 3) { return dispatch(toastMessage('Название не может быть короче 3 символов.')) }
+   if (limit < 10) { return dispatch(toastMessage('Лимит не может быть менее 10.')) }
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))

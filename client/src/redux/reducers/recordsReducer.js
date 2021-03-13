@@ -1,43 +1,75 @@
 import { recordsApi } from "../API/records.api"
+import { hideLoader, showLoader, toastMessage } from "./commonReducer"
+const LStorage = 'MMLocalStorage'
 
 const initialRecordsState = {
-   records: []
+   records: [],
+   currentRecord: {}
 }
 
 export const recordsReducer = (state = initialRecordsState, action) => {
    switch (action.type) {
       case 'RECORDS/FETCH_RECORDS':
          return { ...state, records: action.payload }
-      case 'RECORDS/REMOVE_RECORD':
-         return { ...state, records: [action.payload] }
       case 'RECORDS/CREATE_RECORD':
          return { ...state, records: [...state.records, action.payload] }
-
+      case 'RECORD/CURRENT_RECORD':
+         return { ...state, currentRecord: action.payload }
       default:
          return state;
    }
 }
-export const authActions = {
-   loginAction: (login, uid) => ({ type: 'LOGIN', payload: { login, uid } }),
-   logoutAction: () => ({ type: 'LOGOUT' }),
-   singUpAction: (login, uid) => ({ type: 'SING_IN', payload: { login, uid } }),
-   setInfoAction: ({ login, uid, bill }) => ({ type: 'FETCH_INFO', payload: { login, uid, bill } })
+
+export const fetchRecords = () => async (dispatch) => {
+   try {
+      dispatch(showLoader())
+      const localData = await JSON.parse(localStorage.getItem(LStorage))
+      const records = await recordsApi.fetchRecords(localData.token)
+      dispatch({
+         type: 'RECORDS/FETCH_RECORDS',
+         payload: records
+      })
+      dispatch(hideLoader())
+   } catch (e) {
+      dispatch(hideLoader())
+      dispatch(toastMessage(e))
+   }
 }
 
-export const fetchRecord = () => async (dispatch) => {
-   const records = await recordsApi.fetchRecords()
-   dispatch({
-      type: 'RECORDS/FETCH_RECORDS',
-      payload: records
-   })
-}
 export const removeRecord = (recordId) => async (dispatch) => {
-
+   try {
+      dispatch(showLoader())
+      const localData = await JSON.parse(localStorage.getItem(LStorage))
+      await recordsApi.deleteRecordById(recordId, localData.token)
+      dispatch(hideLoader())
+   } catch (e) {
+      dispatch(hideLoader())
+      dispatch(toastMessage(e))
+   }
 }
-export const createRecord = async (dispatch) => {
 
+export const createRecord = (record, categoryId) => async (dispatch) => {
+   try {
+      dispatch(showLoader())
+      const localData = await JSON.parse(localStorage.getItem(LStorage))
+      const res = await recordsApi.createRecord(record, categoryId, localData.token)
+      await dispatch(fetchRecords())
+      dispatch(toastMessage(res.message))
+      dispatch(hideLoader())
+   } catch (e) {
+      dispatch(hideLoader())
+      dispatch(toastMessage(e))
+   }
 }
-// const fetchRecordById = async (id) => {
-//    const record = await recordsApi()
-//    return record
-// }
+
+export const fetchRecord = (id) => async (dispatch) => {
+   try {
+      dispatch(showLoader())
+      const localData = await JSON.parse(localStorage.getItem(LStorage))
+      const record = await recordsApi.fetchRecordById(id, localData.token)
+      dispatch({ type: 'RECORD/CURRENT_RECORD', payload: record })
+      dispatch(hideLoader())
+   } catch (e) {
+      dispatch(toastMessage(e))
+   }
+}

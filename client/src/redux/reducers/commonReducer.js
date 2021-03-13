@@ -37,11 +37,11 @@ export const setReady = () => ({ type: 'COMMON/SET_READY' })
 export const setCurrency = (currency) => ({ type: 'COMMON/SET_CURRENCY', payload: currency })
 
 
-export const Fetch = async () => {
+export const fetchCurrencies = async () => {
    try {
       const result = await fetch(`https://api.exchangerate-api.com/v4/latest/UAH`)
       return result.json()
    } catch {
-      Fetch()
+      fetchCurrencies()
    }
 }

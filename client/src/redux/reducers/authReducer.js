@@ -1,5 +1,7 @@
 import { authApi } from "../API/auth.api"
+import { fetchCategories } from "./categoriesReducer"
 import { hideLoader, setReady, showLoader, toastMessage } from './commonReducer'
+import { fetchRecords } from "./recordsReducer"
 export const initialAuthState = {
    isAuth: false,
    login: null,
@@ -59,6 +61,8 @@ export const fetchInfoAction = () => async (dispatch) => {
       try {
          const data = await authApi.fetchInfo(localData.token)
          dispatch({ type: 'AUTH/SET_INFO', payload: data.user })
+         await dispatch(fetchCategories())
+         await dispatch(fetchRecords())
       } catch (e) {
          dispatch(toastMessage('Войдите в систему.'))
       }

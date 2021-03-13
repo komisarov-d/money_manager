@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { dateFilter } from '../../../redux/aside/dateFilter'
-import { Fetch, hideLoader } from '../../../redux/reducers/commonReducer'
+import { fetchCurrencies, hideLoader } from '../../../redux/reducers/commonReducer'
 import { Bill } from './hpPartials/Bill'
 import { CurrencyTable } from './hpPartials/CurrencyTable'
 
@@ -15,7 +15,7 @@ export const HomePage = () => {
    const currencies = ['UAH', 'EUR', 'USD']
 
    const updateCurrency = useCallback(async () => {
-      const fetchedCurrency = await Fetch()
+      const fetchedCurrency = await fetchCurrencies()
       setCurrency(fetchedCurrency)
       dispatch(hideLoader())
    }, [dispatch])

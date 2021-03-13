@@ -11,10 +11,8 @@ export const categoriesApi = {
          })
          const categories = response.data.categories
          return categories
-
       } catch (e) {
          throw e.response.data.message
-
       }
    },
    async createCategory(title, limit, token) {

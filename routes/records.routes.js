@@ -12,7 +12,7 @@ router.get('/', auth, async (req, res) => {
    }
 })
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/detail/:id', auth, async (req, res) => {
    try {
       const record = await Record.findById(req.params.id)
       res.status(200).json({ record })
@@ -28,11 +28,11 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
    }
 })
-router.post('/record', auth, async (req, res) => {
+router.post('/create', auth, async (req, res) => {
    try {
-      const { description, amount, type, categoryId } = req.body
+      const { type, amount, description } = req.body.record
       const record = new Record({
-         description, amount, type, owner: req.user.userId, category: categoryId
+         description, amount, type, owner: req.user.userId, category: req.body.categoryId
       })
       await record.save()
       res.status(201).json({ message: 'Запись создана.', record })

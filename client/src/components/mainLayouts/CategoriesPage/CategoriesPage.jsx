@@ -15,7 +15,6 @@ export const CategoriesPage = () => {
       dispatch(fetchCategories())
    }, [dispatch])
 
-
    return (
       <div>
          <div className="page-title">
@@ -29,8 +28,6 @@ export const CategoriesPage = () => {
                   {!categories.length ? <p>Категорий пока нет</p> : <UpdateCateg categories={categories} />}
                </div>
             </section>}
-
-
       </div>
    )
 }

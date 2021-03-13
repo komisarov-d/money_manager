@@ -4,38 +4,33 @@ export const recordsApi = {
 
    async fetchRecords(token) {
       try {
-         const response = await axios.get('/api/records', {
+         const response = await axios.get('/api/record', {
             headers: {
                Authorization: `Bearer ${token}`
             }
          })
-         console.log(response)
-         // const data = response.json()
-         // return data
+         const data = response.data.records
+         return data
       } catch (e) {
          throw e.response.data.message
-
       }
    },
    async fetchRecordById(recordId, token) {
       try {
-         const response = await axios.get(`/api/records/${recordId}`, {
+         const response = await axios.get(`/api/record/detail//${recordId}`, {
             headers: {
                Authorization: `Bearer ${token}`
             }
          })
-         console.log(response)
-
-         // const data = response.json()
-         // return data
+         const record = response.data.record
+         return record
       } catch (e) {
          throw e.response.data.message
-
       }
    },
    async deleteRecordById(recordId, token) {
       try {
-         const response = await axios.delete(`/api/records/${recordId}`, {
+         const response = await axios.delete(`/api/record/${recordId}`, {
             headers: {
                Authorization: `Bearer ${token}`
             }
@@ -49,25 +44,18 @@ export const recordsApi = {
 
       }
    },
-   async createRecord(record, token) {
+   async createRecord(record, categoryId, token) {
       try {
-         const response = await axios.get('/api/records', { record }, {
+         const response = await axios.post('/api/record/create', { record, categoryId }, {
             headers: {
                Authorization: `Bearer ${token}`,
                'Content-Type': 'application/json'
             }
          })
-         console.log(response)
-
-         // const data = response.json()
-         // return data
+         const data = response.data
+         return data
       } catch (e) {
          throw e.response.data.message
       }
    }
-}
-
-export const fetchCurrency = async () => {
-   const currency = await fetch(`https://api.exchangerate-api.com/v4/latest/UAH`)
-   return await currency.json()
 }
