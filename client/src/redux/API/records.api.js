@@ -35,10 +35,9 @@ export const recordsApi = {
                Authorization: `Bearer ${token}`
             }
          })
-         console.log(response)
+         const data = response.data.message
 
-         // const data = response.json()
-         // return data
+         return data
       } catch (e) {
          throw e.response.data.message
 
@@ -52,8 +51,10 @@ export const recordsApi = {
                'Content-Type': 'application/json'
             }
          })
-         const data = response.data
-         return data
+
+
+
+         return response
       } catch (e) {
          throw e.response.data.message
       }

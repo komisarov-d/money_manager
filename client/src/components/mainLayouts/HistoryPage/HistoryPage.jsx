@@ -10,24 +10,18 @@ export const HistoryPage = () => {
    const records = useSelector(state => state.records.records)
 
    const recordsEl = records.map((record, idx) => {
-      // add categories title as props
-      return (
-         <HistoryRecord key={record._id} record={record} idx={idx} />
-      )
+      const title = categories.filter(cat => cat._id !== record.category)[0].title
+      return <HistoryRecord key={record._id}
+         title={title}
+         record={record} idx={idx} />
    })
-
-
-
 
    return (
       <div>
-
          <div className="page-title">
             <h3>История записей</h3>
          </div>
-
-         <HistoryPie categories={categories} />
-
+         <HistoryPie categories={categories} records={records} />
          <section>
             <table>
                <thead>
@@ -48,4 +42,3 @@ export const HistoryPage = () => {
       </div>
    )
 }
-

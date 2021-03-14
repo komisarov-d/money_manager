@@ -1,0 +1,13 @@
+.remove {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 3px;
+   border: 1px solid #ff5733;
+   margin-top: 10px;
+   padding: 6px 7px;
+   color: azure;
+   background-color: #c70039;
+   font-size: 16px;
+   font-weight: 500;
+}

@@ -7,6 +7,7 @@ import { fetchInfoAction } from './redux/reducers/authReducer'
 import { Loader } from './components/common/Loader/Loader'
 import 'materialize-css'
 
+
 export const App = () => {
    const isAuth = useSelector(state => state.auth.isAuth)
    const isReady = useSelector(state => state.common.isReady)
@@ -14,6 +15,7 @@ export const App = () => {
    const dispatch = useDispatch()
    const message = useSelector(state => state.common.message)
    const toast = useMessage()
+
 
    // Message subs
    useEffect(() => {

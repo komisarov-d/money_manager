@@ -1,7 +1,6 @@
 import { recordsApi } from "../API/records.api"
 import { hideLoader, showLoader, toastMessage } from "./commonReducer"
 const LStorage = 'MMLocalStorage'
-
 const initialRecordsState = {
    records: [],
    currentRecord: {}
@@ -15,6 +14,8 @@ export const recordsReducer = (state = initialRecordsState, action) => {
          return { ...state, records: [...state.records, action.payload] }
       case 'RECORD/CURRENT_RECORD':
          return { ...state, currentRecord: action.payload }
+      case 'RECORD/REMOVE_RECORD':
+         return { ...state, records: state.records.filter(rec => rec._id !== action.payload) }
       default:
          return state;
    }
@@ -40,7 +41,12 @@ export const removeRecord = (recordId) => async (dispatch) => {
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
-      await recordsApi.deleteRecordById(recordId, localData.token)
+      const resMessage = await recordsApi.deleteRecordById(recordId, localData.token)
+      dispatch({
+         type: 'RECORD/REMOVE_RECORD',
+         payload: recordId
+      })
+      dispatch(toastMessage(resMessage))
       dispatch(hideLoader())
    } catch (e) {
       dispatch(hideLoader())
@@ -49,13 +55,17 @@ export const removeRecord = (recordId) => async (dispatch) => {
 }
 
 export const createRecord = (record, categoryId) => async (dispatch) => {
+   if (!record.type.length) { return dispatch(toastMessage('Выберите тип записи.')) }
+   if (record.amount < 10) { return dispatch(toastMessage('Минимальная сумма записи 10.')) }
+   if (record.description.length < 4) { return dispatch(toastMessage('Описание не может быть меньше 4 символов.')) }
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
       const res = await recordsApi.createRecord(record, categoryId, localData.token)
       await dispatch(fetchRecords())
-      dispatch(toastMessage(res.message))
+      dispatch(toastMessage(res.data.message))
       dispatch(hideLoader())
+      return res
    } catch (e) {
       dispatch(hideLoader())
       dispatch(toastMessage(e))

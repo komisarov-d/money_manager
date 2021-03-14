@@ -11,23 +11,22 @@ export const RecordPage = () => {
    const categories = useSelector(state => state.categories.categories)
 
    const [currentCat, setCurrent] = useState(categories[0]._id)
-   const [recordForm, setRecordForm] = useState({ type: 'income', amount: 10, description: '' })
+   const [recordForm, setRecordForm] = useState({ type: '', amount: 10, description: '' })
 
    useEffect(() => { window.M.updateTextFields() }, [])
 
-   const changeSelectHandler = (e) => { setCurrent(e.target.value) }
+   const changeHandler = (e) => { setCurrent(e.target.value) }
    const newRecordHandler = (e) => { setRecordForm({ ...recordForm, [e.target.name]: e.target.value }) }
 
-   const createNewRecord = (e) => {
+   const createNewRecord = async (e) => {
       e.preventDefault()
-      dispatch(createRecord(recordForm, currentCat))
-      history.push('/history')
+      const res = await dispatch(createRecord(recordForm, currentCat))
+      if (res !== undefined) { return history.push('/history') }
+      return
    }
-   let catEl = categories.map((cat, idx) => {
-      return (
-         <option key={idx} value={cat._id}>{cat.title}</option>
-      )
-   })
+
+   let catEl = categories.map((cat, idx) => <option key={idx} value={cat._id}>{cat.title}</option>)
+
    if (!categories.length) {
       return (
          <p>Категорий пока нет.<NavLink to='/categories'>Добавить новую категорию...</NavLink></p>
@@ -39,7 +38,7 @@ export const RecordPage = () => {
             <h3>Новая запись</h3>
          </div>
          <form className="form" onSubmit={createNewRecord}>
-            <CaregorySelector catEl={catEl} changeSelectHandler={changeSelectHandler} />
+            <CaregorySelector catEl={catEl} changeHandler={changeHandler} />
             <p>
                <label>
                   <input
