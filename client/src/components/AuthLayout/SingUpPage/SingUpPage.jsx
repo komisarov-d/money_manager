@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { singUpAction } from '../../../redux/reducers/authReducer'
@@ -13,8 +13,12 @@ export const SingUpPage = () => {
    const [singUpForm, setSingUpForm] = useState({
       email: '',
       password: '',
-      name: ''
+      name: '',
+      bill: 0
    })
+   useEffect(() => {
+      window.M.updateTextFields()
+   }, [])
    const formChangeHandler = useCallback(e => {
       setSingUpForm({ ...singUpForm, [e.target.name]: e.target.value })
    }, [singUpForm])
@@ -58,6 +62,17 @@ export const SingUpPage = () => {
                   name='name'
                />
                <label htmlFor="name">Имя</label>
+            </div>
+            <div className="input-field">
+               <input
+                  id="bill"
+                  type="number"
+                  name='bill'
+                  className="validate"
+                  onChange={formChangeHandler}
+                  value={singUpForm.bill}
+               />
+               <label htmlFor="password">Начальный капитал</label>
             </div>
             <p>
                <label>

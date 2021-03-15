@@ -36,11 +36,9 @@ export const recordsApi = {
             }
          })
          const data = response.data.message
-
          return data
       } catch (e) {
          throw e.response.data.message
-
       }
    },
    async createRecord(record, categoryId, token) {
@@ -51,9 +49,6 @@ export const recordsApi = {
                'Content-Type': 'application/json'
             }
          })
-
-
-
          return response
       } catch (e) {
          throw e.response.data.message

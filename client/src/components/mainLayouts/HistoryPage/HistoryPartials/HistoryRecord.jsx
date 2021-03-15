@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { dateFilter } from '../../../../redux/aside/dateFilter'
 import { NavLink } from 'react-router-dom'
-export const HistoryRecord = ({ record, title, idx }) => {
-   useEffect(() => { window.M.Tooltip.init(document.querySelectorAll('.tooltipped')); }, [])
+
+export const HistoryRecord = ({ record, idx, categories }) => {
+   const title = categories.filter(cat => cat._id !== record.category)[0].title
    return (
       <tr>
          <td>{idx + 1}</td>

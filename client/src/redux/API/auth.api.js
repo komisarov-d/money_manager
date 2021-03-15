@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 export const authApi = {
-   async singUp(email, password, name) {
+   async singUp(email, password, name, bill) {
       try {
-         const response = await axios.post('/api/auth/singup', { email, password, name }, {
+         const response = await axios.post('/api/auth/singup', { email, password, name, bill }, {
             headers: {
                'Content-Type': 'application/json'
             }
@@ -21,7 +21,6 @@ export const authApi = {
                'Content-Type': 'application/json'
             }
          })
-
          const data = response.data
          return data
       } catch (e) {
@@ -31,6 +30,19 @@ export const authApi = {
    async fetchInfo(token) {
       try {
          const response = await axios.get('/api/auth/info', {
+            headers: {
+               Authorization: `Bearer: ${token}`
+            }
+         })
+         const data = response.data
+         return data
+      } catch (e) {
+         throw e.response.data.message
+      }
+   },
+   async updateInfo(name, bill, token) {
+      try {
+         const response = await axios.post('/api/auth/update', { name, bill }, {
             headers: {
                Authorization: `Bearer: ${token}`
             }

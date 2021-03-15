@@ -2,7 +2,10 @@ const initialCommonState = {
    loading: false,
    message: null,
    isReady: false,
-   currency: {}
+   currency: {},
+   totalRecordsCount: 0,
+   pageSize: 5,
+   currentPage: 1
 }
 
 

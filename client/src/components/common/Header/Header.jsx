@@ -8,7 +8,7 @@ export const Header = (props) => {
    const dispatch = useDispatch()
 
    const [date, setDate] = useState(new Date())
-   // const [interval, changeInterval] = useState(null)
+
 
    const name = useSelector(state => state.auth.name)
    const asideToggle = (e) => {
@@ -47,17 +47,14 @@ export const Header = (props) => {
                   </span>
                   <span style={{ paddingLeft: '10px' }} className="black-text">{dateFilter(date, 'datetime')}</span>
                </div>
-
                <ul className="right hide-on-small-and-down">
                   <li>
-                     {/* eslint-disable-next-line */}
                      <a
                         className="dropdown-trigger black-text"
-                        href='#'
+                        href='#!'
                         data-target="dropdown"
                      >{name} <i className="material-icons right">arrow_drop_down</i>
                      </a>
-
                      <ul id='dropdown' className='dropdown-content'>
                         <li>
                            <NavLink to='/profile' className="black-text">
@@ -65,8 +62,7 @@ export const Header = (props) => {
                         </li>
                         <li className="divider" tabIndex="-1"></li>
                         <li>
-                           {/* eslint-disable-next-line */}
-                           <a onClick={logout} href='/' className="black-text">
+                           <a onClick={logout} href='#!' className="black-text">
                               <i className="material-icons">assignment_return</i>
                               Выйти</a>
                         </li>

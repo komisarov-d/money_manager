@@ -2,25 +2,35 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { HistoryRecord } from './HistoryPartials/HistoryRecord';
 import { HistoryPie } from './HistoryPartials/HistoryPie';
-
+import { NavLink } from 'react-router-dom';
+// import { Pagination } from '../../common/Paginator/Paginator';
+import _ from 'lodash'
 export const HistoryPage = () => {
    document.title = 'History'
 
    const categories = useSelector(state => state.categories.categories)
    const records = useSelector(state => state.records.records)
 
-   const recordsEl = records.map((record, idx) => {
-      const title = categories.filter(cat => cat._id !== record.category)[0].title
-      return <HistoryRecord key={record._id}
-         title={title}
-         record={record} idx={idx} />
+
+   const paginationEl = _.chunk(records, 5)
+   console.log(paginationEl);
+   const recordsEl = records.reverse().map((record, idx) => {
+      return <HistoryRecord
+         categories={categories}
+         key={record._id}
+         record={record}
+         idx={idx}
+      />
    })
 
+   if (!categories.length) { return <p>Категорий пока нет. <NavLink to={'/categories'}>Создать</NavLink></p> }
+   if (!records.length) { return <p>Записей пока нет. <NavLink to={'/record'}>Создать</NavLink></p> }
    return (
       <div>
          <div className="page-title">
             <h3>История записей</h3>
          </div>
+
          <HistoryPie categories={categories} records={records} />
          <section>
             <table>
@@ -38,6 +48,7 @@ export const HistoryPage = () => {
                   {recordsEl}
                </tbody>
             </table>
+            {/* <Pagination /> */}
          </section>
       </div>
    )

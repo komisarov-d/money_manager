@@ -1,4 +1,5 @@
 import { recordsApi } from "../API/records.api"
+import { setBill } from "./authReducer"
 import { hideLoader, showLoader, toastMessage } from "./commonReducer"
 const LStorage = 'MMLocalStorage'
 const initialRecordsState = {
@@ -63,6 +64,7 @@ export const createRecord = (record, categoryId) => async (dispatch) => {
       const localData = await JSON.parse(localStorage.getItem(LStorage))
       const res = await recordsApi.createRecord(record, categoryId, localData.token)
       await dispatch(fetchRecords())
+      dispatch(setBill(res.data.bill))
       dispatch(toastMessage(res.data.message))
       dispatch(hideLoader())
       return res

@@ -17,12 +17,14 @@ export const categoriesApi = {
    },
    async createCategory(title, limit, token) {
       try {
-         await axios.post('/api/category/create', { title, limit }, {
+         const response = await axios.post('/api/category/create', { title, limit }, {
             headers: {
                Authorization: `Bearer: ${token}`,
                'Content-Type': 'application/json'
             }
          })
+         const data = response.data.category
+         return data
       } catch (e) {
          throw e.response.data.message
       }

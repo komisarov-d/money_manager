@@ -14,6 +14,9 @@ export const categoriesReducer = (state = initialCategoriesState, action) => {
          return { ...state, categories: [...action.payload] }
       case 'CATEGORIES/UPDATE':
          return { ...state, categories: updateObjectInArray(state.categories, action.id, "_id", { title: action.title, limit: action.limit }) }
+      case 'CATEGORIES/CREATE':
+         return { ...state, categories: [...state.categories, action.payload] }
+
       default:
          return state;
    }
@@ -52,8 +55,10 @@ export const createCategory = ({ title, limit }) => async (dispatch) => {
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
-      await categoriesApi.createCategory(title, limit, localData.token)
-      await dispatch(fetchCategories())
+      const newCategory = await categoriesApi.createCategory(title, limit, localData.token)
+      console.log(newCategory);
+      await dispatch({ type: 'CATEGORIES/CREATE', payload: newCategory })
+      // await dispatch(fetchCategories())
       dispatch(toastMessage('Категория успешно создана.'))
       dispatch(hideLoader())
    } catch (e) {
