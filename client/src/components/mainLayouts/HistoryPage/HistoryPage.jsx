@@ -1,20 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { HistoryRecord } from './HistoryPartials/HistoryRecord';
 import { HistoryPie } from './HistoryPartials/HistoryPie';
 import { NavLink } from 'react-router-dom';
 // import { Pagination } from '../../common/Paginator/Paginator';
-import _ from 'lodash'
+// import _ from 'lodash'
 export const HistoryPage = () => {
    document.title = 'History'
 
    const categories = useSelector(state => state.categories.categories)
    const records = useSelector(state => state.records.records)
+   const currentPage = useSelector(state => state.common.currentPage)
+   const dispatch = useDispatch()
 
+   const [page, setPage] = useState(currentPage)
+   const paginationHandler = (page) => { dispatch(setCurrentPage(page)) }
 
    const paginationEl = _.chunk(records, 5)
-   console.log(paginationEl);
-   const recordsEl = records.reverse().map((record, idx) => {
+
+   const recordsEl = records.map((record, idx) => {
       return <HistoryRecord
          categories={categories}
          key={record._id}

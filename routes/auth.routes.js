@@ -19,13 +19,13 @@ router.post('/singup',
          if (!errors.isEmpty) {
             return res.status(400).json({ errors: errors.array(), message: 'Некоректные данные при регистрации' })
          }
-         const { email, password, name } = req.body
+         const { email, password, name, bill } = req.body
          const alreadyExists = await User.findOne({ email })
          if (alreadyExists) {
             return res.status(400).json({ message: 'Пользователь с таким имейлом уже существует.' })
          }
          const hashedPassword = await bcrypt.hash(password, 12)
-         const user = new User({ email, password: hashedPassword, name })
+         const user = new User({ email, password: hashedPassword, name, bill })
          await user.save()
          const token = jwt.sign(
             { userId: user.id },
@@ -73,6 +73,21 @@ router.get('/info', auth, async (req, res) => {
    try {
       const user = await User.findOne({ _id: req.user.userId })
       res.json({ user })
+   } catch (e) {
+      return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
+   }
+})
+router.post('/update', auth, [
+   check('name', 'Введите имя.').exists(),
+   check('bill', 'Введите капитал.').exists()
+], async (req, res) => {
+   try {
+      const user = await User.findOne({ _id: req.user.userId })
+      const { name, bill } = req.body
+      user.name = name
+      user.bill = bill
+      user.save()
+      res.status(200).json({ message: 'Данные успешно обновлены.' })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
    }

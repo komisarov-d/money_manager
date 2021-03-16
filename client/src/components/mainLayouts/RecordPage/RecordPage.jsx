@@ -10,8 +10,8 @@ export const RecordPage = () => {
    const dispatch = useDispatch()
    const categories = useSelector(state => state.categories.categories)
 
-   const createNewRecord = async (recordForm, currentCat) => {
-      const res = await dispatch(createRecord(recordForm, currentCat))
+   const createNewRecord = (recordForm, currentCat) => {
+      const res = dispatch(createRecord(recordForm, currentCat))
       if (res !== undefined) { return history.push('/history') }
       return
    }

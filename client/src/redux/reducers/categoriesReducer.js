@@ -56,9 +56,7 @@ export const createCategory = ({ title, limit }) => async (dispatch) => {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
       const newCategory = await categoriesApi.createCategory(title, limit, localData.token)
-      console.log(newCategory);
       await dispatch({ type: 'CATEGORIES/CREATE', payload: newCategory })
-      // await dispatch(fetchCategories())
       dispatch(toastMessage('Категория успешно создана.'))
       dispatch(hideLoader())
    } catch (e) {

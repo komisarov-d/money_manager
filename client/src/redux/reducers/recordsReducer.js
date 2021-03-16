@@ -63,7 +63,7 @@ export const createRecord = (record, categoryId) => async (dispatch) => {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
       const res = await recordsApi.createRecord(record, categoryId, localData.token)
-      await dispatch(fetchRecords())
+      dispatch({ type: 'RECORDS/CREATE_RECORD', payload: res.data.record })
       dispatch(setBill(res.data.bill))
       dispatch(toastMessage(res.data.message))
       dispatch(hideLoader())

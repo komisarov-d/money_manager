@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const auth = require('../middleware/auth.middleware')
 const Record = require('../models/Record')
+const User = require('../models/User')
 const router = Router()
 
 router.get('/', auth, async (req, res) => {
@@ -34,9 +35,15 @@ router.post('/create', auth, async (req, res) => {
       const record = new Record({
          description, amount, type, owner: req.user.userId, category: req.body.categoryId
       })
+      const user = await User.findOne({ _id: req.user.userId })
+      if (type === 'outcome') {
+         user.bill = user.bill - amount
+      } else if (type === 'income') {
+         user.bill = user.bill + +amount
+      }
       await record.save()
-      res.status(201).json({ message: 'Запись создана.' })
-      // res.redirect('/history')
+      await user.save()
+      res.status(201).json({ message: 'Запись создана.', bill: user.bill, record })
    } catch (e) {
       return res.status(500).json({ message: ' Что-то пошло не так попробуйте снова.' })
    }
