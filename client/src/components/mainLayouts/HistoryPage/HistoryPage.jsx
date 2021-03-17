@@ -42,13 +42,13 @@ export const HistoryPage = () => {
                      <th>Открыть</th>
                   </tr>
                </thead>
-               <tbody>
-                  <HistoryRecords
-                     paginationArr={paginationArr}
-                     categories={categories}
-                     pageArrIndex={pageArrIndex}
-                  />
-               </tbody>
+
+               <HistoryRecords
+                  paginationArr={paginationArr}
+                  categories={categories}
+                  pageArrIndex={pageArrIndex}
+               />
+
             </table>
             <Pagination
                paginationArr={paginationArr}
