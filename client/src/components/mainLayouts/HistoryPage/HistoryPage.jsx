@@ -16,7 +16,7 @@ export const HistoryPage = () => {
    const currentPage = useSelector(state => state.common.currentPage)
    const dispatch = useDispatch()
 
-   const paginationArr = _.chunk(records, 4)
+   const paginationArr = _.chunk(records, 6)
    const paginationHandler = useCallback((page) => { dispatch(setCurrentPage(page)) }, [dispatch])
 
    const recordsEl = paginationArr[currentPage - 1].map((record, idx) => {

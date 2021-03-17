@@ -1,15 +1,20 @@
 {
   "name": "money_manager",
-  "version": "1.0.0",
-  "description": "money manager full-stack",
+  "version": "1.0.1",
+  "description": "money manager app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client"
   },
-  "keywords": [],
+  "keywords": [
+    "money manager",
+    "mern"
+  ],
   "author": "Komisarov Dmitriy komisarov.dev@gmail.com",
   "license": "ISC",
   "dependencies": {
@@ -20,10 +25,10 @@
     "express-validator": "^6.9.2",
     "jsonwebtoken": "^8.5.1",
     "materialize-css": "^1.0.0-rc.2",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.17",
+    "concurrently": "^5.3.0"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0",
     "nodemon": "^2.0.7"
   }
 }

@@ -45,7 +45,7 @@ export const HomePage = () => {
             <tr key={curr}>
                <td>{curr}</td>
                <td>{currency.rates[curr].toFixed(4)}</td>
-               <td>{dateFilter(currency.date)}</td>
+               <td>{dateFilter(currency.date, 'date')}</td>
             </tr>
          )
       }

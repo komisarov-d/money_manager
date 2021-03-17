@@ -20,12 +20,8 @@ export const UpdateCateg = ({ categories }) => {
       window.M.updateTextFields()
    }, [])
 
-   const changeSelectHandler = (e) => { setCurrent(e.target.value) }
-   let catEl = categories.map((cat, idx) => {
-      return (
-         <option key={idx} value={cat._id}>{cat.title}</option>
-      )
-   })
+   const changeHandler = (e) => { setCurrent(e.target.value) }
+   let catEl = categories.map((cat, idx) => { return <option key={idx} value={cat._id}>{cat.title}</option> })
    return (
       <div className="col s12 m6">
          <div>
@@ -33,7 +29,7 @@ export const UpdateCateg = ({ categories }) => {
                <h4>Редактировать</h4>
             </div>
             <form onSubmit={updateHandler}>
-               <CaregorySelector catEl={catEl} changeSelectHandler={changeSelectHandler} />
+               <CaregorySelector catEl={catEl} changeHandler={changeHandler} />
 
                <div className="input-field">
                   <input

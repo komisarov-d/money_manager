@@ -32,7 +32,7 @@ router.delete('/:id', auth, async (req, res) => {
 router.post('/create', auth, async (req, res) => {
    try {
       const records = await Record.find({ owner: req.user.userId })
-      if (records.length > 60) { return res.status(400).json({ message: 'Максимальное количество записей 60.' }) }
+      if (records.length > 70) { return res.status(400).json({ message: 'Максимальное количество записей 70.' }) }
       const { type, amount, description } = req.body.record
       const record = new Record({ description, amount, type, owner: req.user.userId, category: req.body.categoryId })
       const user = await User.findOne({ _id: req.user.userId })
