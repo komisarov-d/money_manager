@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { HistoryRecord } from './HistoryPartials/HistoryRecord';
 import { HistoryPie } from './HistoryPartials/HistoryPie';
 import { NavLink } from 'react-router-dom';
-// import { Pagination } from '../../common/Paginator/Paginator';
-// import _ from 'lodash'
+import { Pagination } from '../../common/Paginator/Paginator';
+import _ from 'lodash'
+import { setCurrentPage } from '../../../redux/reducers/commonReducer';
+
+
 export const HistoryPage = () => {
    document.title = 'History'
 
-   const categories = useSelector(state => state.categories.categories)
-   const records = useSelector(state => state.records.records)
+   let categories = useSelector(state => state.categories.categories)
+   let records = useSelector(state => state.records.records)
    const currentPage = useSelector(state => state.common.currentPage)
    const dispatch = useDispatch()
 
-   const [page, setPage] = useState(currentPage)
-   const paginationHandler = (page) => { dispatch(setCurrentPage(page)) }
+   const paginationArr = _.chunk(records, 4)
+   const paginationHandler = useCallback((page) => { dispatch(setCurrentPage(page)) }, [dispatch])
 
-   const paginationEl = _.chunk(records, 5)
+   const recordsEl = paginationArr[currentPage - 1].map((record, idx) => {
 
-   const recordsEl = records.map((record, idx) => {
       return <HistoryRecord
          categories={categories}
          key={record._id}
@@ -52,7 +54,12 @@ export const HistoryPage = () => {
                   {recordsEl}
                </tbody>
             </table>
-            {/* <Pagination /> */}
+            <Pagination
+               paginationArr={paginationArr}
+               paginationHandler={paginationHandler}
+               records={records}
+               currentPage={currentPage}
+            />
          </section>
       </div>
    )

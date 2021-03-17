@@ -31,16 +31,12 @@ router.delete('/:id', auth, async (req, res) => {
 })
 router.post('/create', auth, async (req, res) => {
    try {
+      const records = await Record.find({ owner: req.user.userId })
+      if (records.length > 60) { return res.status(400).json({ message: 'Максимальное количество записей 60.' }) }
       const { type, amount, description } = req.body.record
-      const record = new Record({
-         description, amount, type, owner: req.user.userId, category: req.body.categoryId
-      })
+      const record = new Record({ description, amount, type, owner: req.user.userId, category: req.body.categoryId })
       const user = await User.findOne({ _id: req.user.userId })
-      if (type === 'outcome') {
-         user.bill = user.bill - amount
-      } else if (type === 'income') {
-         user.bill = user.bill + +amount
-      }
+      if (type === 'outcome') { user.bill = user.bill - amount } else if (type === 'income') { user.bill = user.bill + +amount }
       await record.save()
       await user.save()
       res.status(201).json({ message: 'Запись создана.', bill: user.bill, record })

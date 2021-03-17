@@ -12,7 +12,7 @@ export const recordsReducer = (state = initialRecordsState, action) => {
       case 'RECORDS/FETCH_RECORDS':
          return { ...state, records: action.payload }
       case 'RECORDS/CREATE_RECORD':
-         return { ...state, records: [...state.records, action.payload] }
+         return { ...state, records: [action.payload, ...state.records.reverse()] }
       case 'RECORD/CURRENT_RECORD':
          return { ...state, currentRecord: action.payload }
       case 'RECORD/REMOVE_RECORD':
@@ -26,7 +26,8 @@ export const fetchRecords = () => async (dispatch) => {
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
-      const records = await recordsApi.fetchRecords(localData.token)
+      const response = await recordsApi.fetchRecords(localData.token)
+      const records = response.reverse()
       dispatch({
          type: 'RECORDS/FETCH_RECORDS',
          payload: records
