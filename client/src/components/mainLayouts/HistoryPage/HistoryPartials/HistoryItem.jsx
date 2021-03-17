@@ -2,9 +2,8 @@ import React from 'react'
 import { dateFilter } from '../../../../redux/aside/dateFilter'
 import { NavLink } from 'react-router-dom'
 
-export const HistoryRecord = ({ record, idx, categories }) => {
+export const HistoryItem = ({ record, idx, title }) => {
 
-   const title = categories.filter(cat => cat._id === record.category)[0].title
    return (
       <tr>
          <td>{idx + 1}</td>
