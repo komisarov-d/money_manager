@@ -1,6 +1,6 @@
 {
   "name": "money_manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "money manager app",
   "main": "index.js",
   "scripts": {

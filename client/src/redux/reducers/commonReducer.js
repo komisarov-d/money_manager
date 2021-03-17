@@ -3,7 +3,7 @@ const initialCommonState = {
    message: null,
    isReady: false,
    currency: {},
-   currentPage: 1
+   pageArrIndex: 0
 }
 
 
