@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
    try {
       const token = req.headers.authorization.split(' ')[1]
       if (!token) {
-         res.status(401).json({ message: 'Вы не авторизованы.' })
+         return res.status(401).json({ message: 'Вы не авторизованы.' })
       }
       const verifUser = jwt.verify(token, config.get('jwtSecret'))
       req.user = verifUser

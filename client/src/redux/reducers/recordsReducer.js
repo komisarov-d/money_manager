@@ -10,9 +10,9 @@ const initialRecordsState = {
 export const recordsReducer = (state = initialRecordsState, action) => {
    switch (action.type) {
       case 'RECORDS/FETCH_RECORDS':
-         return { ...state, records: action.payload }
+         return { ...state, records: [...action.payload.reverse()] }
       case 'RECORDS/CREATE_RECORD':
-         return { ...state, records: [action.payload, ...state.records.reverse()] }
+         return { ...state, records: [action.payload, ...state.records] }
       case 'RECORD/CURRENT_RECORD':
          return { ...state, currentRecord: action.payload }
       case 'RECORD/REMOVE_RECORD':
@@ -26,12 +26,8 @@ export const fetchRecords = () => async (dispatch) => {
    try {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
-      const response = await recordsApi.fetchRecords(localData.token)
-      const records = response.reverse()
-      dispatch({
-         type: 'RECORDS/FETCH_RECORDS',
-         payload: records
-      })
+      const records = await recordsApi.fetchRecords(localData.token)
+      dispatch({ type: 'RECORDS/FETCH_RECORDS', payload: records })
       dispatch(hideLoader())
    } catch (e) {
       dispatch(hideLoader())
@@ -44,10 +40,7 @@ export const removeRecord = (recordId) => async (dispatch) => {
       dispatch(showLoader())
       const localData = await JSON.parse(localStorage.getItem(LStorage))
       const resMessage = await recordsApi.deleteRecordById(recordId, localData.token)
-      dispatch({
-         type: 'RECORD/REMOVE_RECORD',
-         payload: recordId
-      })
+      dispatch({ type: 'RECORD/REMOVE_RECORD', payload: recordId })
       dispatch(toastMessage(resMessage))
       dispatch(hideLoader())
    } catch (e) {
