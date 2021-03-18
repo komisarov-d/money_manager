@@ -2,12 +2,13 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { CategoryPlanning } from './ppPartials/CategoryPlanning'
 import { useSelector } from 'react-redux'
-
+import '../../commonStyles/common.css'
 export const PlanningPage = () => {
    document.title = 'Planning'
    const categories = useSelector(state => state.categories.categories)
    const records = useSelector(state => state.records.records)
    const bill = useSelector(state => state.auth.bill)
+   if (!categories.length) { return <p className='center'>Категорий пока нет. <NavLink to='/categories'>Создать?</NavLink></p> }
 
    const planningEl = categories.map((cat) => {
       const spend = records
@@ -32,7 +33,6 @@ export const PlanningPage = () => {
       />)
    })
 
-   if (!categories.length) { <p>Категорий пока нет. <NavLink to='/categories'>Создать</NavLink></p> }
    return (
       <div>
          <div className="page-title">

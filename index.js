@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
-
+const path = require('path')
 const app = express()
 //dev
 // const PORT = config.get('port') ?? 5000

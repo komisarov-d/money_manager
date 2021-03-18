@@ -1,10 +1,27 @@
 import React from 'react'
+// import { HistoryItem } from './HistoryItem'
+
 import { dateFilter } from '../../../../redux/aside/dateFilter'
 import { NavLink } from 'react-router-dom'
 
-export const HistoryRecord = ({ record, idx, categories }) => {
+export const HistoryRecords = ({ paginationArr, categories, pageArrIndex }) => {
 
-   const title = categories.filter(cat => cat._id === record.category)[0].title
+   const recordsEl = paginationArr[pageArrIndex].map((record, idx) => {
+      const title = categories.filter(cat => cat._id === record.category)[0].title
+      return <HistoryItem
+         title={title}
+         key={record._id}
+         record={record}
+         idx={idx}
+      />
+   })
+
+
+   return <tbody>{recordsEl}</tbody>
+}
+
+export const HistoryItem = ({ record, idx, title }) => {
+
    return (
       <tr>
          <td>{idx + 1}</td>

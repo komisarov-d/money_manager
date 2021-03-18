@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
 import { createRecord } from '../../../redux/reducers/recordsReducer'
 import { RecordForm } from './rpPartials/RecordForm'
+import '../../commonStyles/common.css'
 
 export const RecordPage = () => {
    document.title = 'Records'
@@ -16,7 +17,7 @@ export const RecordPage = () => {
       return
    }
 
-   if (!categories.length) { return (<p>Категорий пока нет. <NavLink to='/categories'>Создать категорию...</NavLink></p>) }
+   if (!categories.length) { return (<p className='center'>Категорий пока нет. <NavLink to='/categories'>Создать категорию?</NavLink></p>) }
    return (
       <div>
          <div className="page-title">
