@@ -3,7 +3,7 @@ const initialCommonState = {
    message: null,
    isReady: false,
    currency: {},
-   currentPage: 1
+   pageArrIndex: 0
 }
 
 
@@ -22,7 +22,7 @@ export const commonReducer = (state = initialCommonState, action) => {
       case 'COMMON/SET_CURRENCY':
          return { ...state, currency: action.payload }
       case 'COMMON/SET_CURRENT-PAGE':
-         return { ...state, currentPage: action.payload }
+         return { ...state, pageArrIndex: action.payload }
       default:
          return state;
    }
